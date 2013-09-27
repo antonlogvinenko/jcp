@@ -10,6 +10,4 @@ This page covers benefits and risks of using threads.
 * Simplified handling of asynchronous events
     * With a **single-threaded** application you have to choose between **stalling** on IO and doing **non-blocking IO in a single thread** which is complicated.
     * With threads you can either assign **a thread per IO activity** or use **non-blocking IO** (`java.nio` with `poll`, `select` system calls) and still handle tasks sequentially in threads.
-* More responsive user interfaces
-    * Main event loop running in event dispatch thread (EDT)
-    * Long running tasks can be delegated to separate threads not to freeze UI
+* More responsive user interfaces. Long running tasks can be delegated to separate threads not to freeze UI.
