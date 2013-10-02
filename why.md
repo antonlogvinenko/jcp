@@ -19,3 +19,4 @@ This page covers benefits and risks of using threads.
 * Liveness hazards. A liveness failure occurs when an activity gets into a state such that it is permanently **unable to make forward progress**.
 * Performance hazards
     * Context switches when the scheduler suspends the active thread temporarily so another thread can run are more frequent in applications with many threads, and have significant costs.
+    * When threads share data, they must use synchronization mechanisms that can inhibit compiler optimizations, flush or invalidate memory caches, and create synchronization traffic on the shared memory bus.
