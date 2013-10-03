@@ -7,7 +7,6 @@ h1. State issues
 Informally, an object's state is its data, stored in state variables such as instance or static fields. An object's state may include fields from other, dependent objects; HashMap's state is partially stored in the HashMap object itself, but also in many Map.Entry objects. An object's state encompasses any data hat can affect its externally visible behavior.
 
 Escape
-
 Definition of immutable object
 Definition of effectively immutable object
 Mutable
@@ -18,22 +17,18 @@ Mutable
 | Effectively immutable | Has no state | Minor issues |
 | Mutable | Has no state | Major issues |
 
-* *Stateless* &ndash; thread safe
-* *Immutable* &ndash; thread safe
-* *Effectively immutable* &ndash; minor safety issues
-* Mutable &ndash; major safety issues
+h1. Effectively immutable objects problems:
 
-
-
-## Effectively immutable objects problems:
 * Publication safety
 
-## Mutable objects problems:
+h1. Mutable objects problems:
+
 * Not sharing - no problem here
 * Sharing - big problem
 * Escape - big problem
 
-## Sharing mutable objects:
+h1. Sharing mutable objects:
+
 * Atomicity
     * Read-modify-write
     * Check-then-act
