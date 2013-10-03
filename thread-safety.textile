@@ -12,7 +12,7 @@ Definition of immutable object
 Definition of effectively immutable object
 Mutable
 
-| Type || Definition || Thread safety |
+|_ Type |_ Definition |_ Thread safety |
 | Stateless | Has no state | Thread safe |
 | Immutable | 1 2 3 | Thread safe |
 | Effectively immutable | Has no state | Minor issues |
