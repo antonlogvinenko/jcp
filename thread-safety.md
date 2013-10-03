@@ -13,8 +13,14 @@ Mutable
 <table>
 	<tr>
 		<td>Stateless</td><td>Has no state</td><td>Thread safe</td>
+	</tr>
+	<tr>
 		<td>Immutable</td><td>1 2 3</td><td>Thread safe</td>
+	</tr>
+	<tr>
 		<td>Effectively immutable</td><td>Has no state</td><td>Minor issues</td>
+	</tr>
+	<tr>
 		<td>Mutable</td><td>Has no state</td><td>Major issues</td>
 	</tr>
 </table>
