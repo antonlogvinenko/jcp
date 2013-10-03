@@ -11,10 +11,10 @@ Definition of effectively immutable object
 Mutable
 
 
-* *Stateless* &mdash; thread safe
-* *Immutable* - thread safe
-* *Effectively immutable* - minor safety issues
-* Mutable - major safety issues
+* *Stateless* &ndash; thread safe
+* *Immutable* &ndash; thread safe
+* *Effectively immutable* &ndash; minor safety issues
+* Mutable &ndash; major safety issues
 
 
 
