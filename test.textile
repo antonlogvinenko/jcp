@@ -1,3 +1,5 @@
 
 sdf
 |asd|asd|asd|
+
+@a = b@
