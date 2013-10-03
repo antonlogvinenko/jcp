@@ -12,7 +12,10 @@ Mutable
 
 <table>
 	<tr>
-		<td>Stateless</td>
+		<td>Stateless</td><td>Has no state</td><td>Thread safe</td>
+		<td>Immutable</td><td>1 2 3</td><td>Thread safe</td>
+		<td>Effectively immutable</td><td>Has no state</td><td>Minor issues</td>
+		<td>Mutable</td><td>Has no state</td><td>Major issues</td>
 	</tr>
 </table>
 
