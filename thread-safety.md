@@ -11,6 +11,8 @@ Definition of effectively immutable object
 Mutable
 
 <table>
+	<th>
+		
 	<tr>
 		<td>Stateless</td><td>Has no state</td><td>Thread safe</td>
 	</tr>
