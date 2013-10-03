@@ -4,10 +4,16 @@ A class is thread safe if it **behaves correctly when accessed from multiple thr
 ## State issues
 Informally, an object's state is its data, stored in state variables such as instance or static fields. An object's state may include fields from other, dependent objects; HashMap's state is partially stored in the HashMap object itself, but also in many Map.Entry objects. An object's state encompasses any data hat can affect its externally visible behavior.
 
-* *Stateless* - thread safe
-* Immutable - no problems here
-* Effectively immutable
-* Mutable - this is a huge problem
+Escape
+
+Definition of immutable object
+Definition of effectively immutable object
+Mutable
+
+* *Stateless* -- thread safe
+* *Immutable* - thread safe
+* *Effectively immutable* - minor safety issues
+* Mutable - major safety issues
 
 
 
