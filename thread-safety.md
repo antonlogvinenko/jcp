@@ -10,6 +10,11 @@ Definition of immutable object
 Definition of effectively immutable object
 Mutable
 
+<table>
+	<tr>
+		<td>Stateless</td>
+	</tr>
+</table>
 
 * *Stateless* &ndash; thread safe
 * *Immutable* &ndash; thread safe
