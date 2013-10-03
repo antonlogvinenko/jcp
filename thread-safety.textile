@@ -1,7 +1,7 @@
-## Thread safety
+h1 Thread safety
 A class is thread safe if it **behaves correctly when accessed from multiple threads**, regardless of the scheduling or interleaving of the execution of those threads by the runtime environment, and with no additional synchronization or other coordination on the part of the calling code.
 
-## State issues
+h1 State issues
 Informally, an object's state is its data, stored in state variables such as instance or static fields. An object's state may include fields from other, dependent objects; HashMap's state is partially stored in the HashMap object itself, but also in many Map.Entry objects. An object's state encompasses any data hat can affect its externally visible behavior.
 
 Escape
@@ -10,22 +10,11 @@ Definition of immutable object
 Definition of effectively immutable object
 Mutable
 
-<table>
-	<th>
-		
-	<tr>
-		<td>Stateless</td><td>Has no state</td><td>Thread safe</td>
-	</tr>
-	<tr>
-		<td>Immutable</td><td>1 2 3</td><td>Thread safe</td>
-	</tr>
-	<tr>
-		<td>Effectively immutable</td><td>Has no state</td><td>Minor issues</td>
-	</tr>
-	<tr>
-		<td>Mutable</td><td>Has no state</td><td>Major issues</td>
-	</tr>
-</table>
+|| Type || Definition || Thread safety ||
+| Stateless | Has no state | Thread safe |
+| Immutable | 1 2 3 | Thread safe |
+| Effectively immutable | Has no state | Minor issues |
+| Mutable | Has no state | Major issues |
 
 * *Stateless* &ndash; thread safe
 * *Immutable* &ndash; thread safe
