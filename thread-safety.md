@@ -10,6 +10,9 @@ Definition of immutable object
 Definition of effectively immutable object
 Mutable
 
+|a|b|
+|c|d|
+
 * *Stateless* -- thread safe
 * *Immutable* - thread safe
 * *Effectively immutable* - minor safety issues
