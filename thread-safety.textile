@@ -16,8 +16,6 @@ An object is *published safely* if both the reference to the object and the obje
 
 *Effectively immutable objects* are those not technically immutable, but whose state will not be modified after publication.
 
-Safely published
-
 An object is *immutable* if:
 * Its state cannot be modified after construction
 * All its fields are final
