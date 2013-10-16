@@ -27,23 +27,24 @@ Definition of escape
 
 h2. Categories of thread safety
 
-|_. Type |_. Thread safe |
+h3. State type
+
+|_. Type |_. Thread safe? |
 | Stateless | Always |
 | Immutable | Always |
-| Effectively immutable | No, only if safely published |
-| Mutable | No, described later |
+| Effectively immutable | No |
+| Mutable | No |
 
-h1. Effectively immutable objects problems:
+h3. Effectively immutable
+???
 
-* Publication safety
+h3. Mutable
+|_. Type |_. Thread safe? |
+| Not sharing | Always |
+| Sharing | No |
+| Escaping | No |
 
-h1. Mutable objects problems:
-
-* Not sharing - no problem here
-* Sharing - big problem
-* Escape - big problem
-
-h1. Sharing mutable objects:
+h3. Sharing mutable objects:
 
 * Atomicity
     * Read-modify-write
