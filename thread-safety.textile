@@ -17,12 +17,10 @@ An object is *immutable* if:
 * All its fields are final
 * It is properly constructed
 
-|_. Type |_. Thread safe? |
-| Stateless | Always |
-| Immutable | Always |
-| Not shared | Always |
-| Mutable shared | No |
-| Effectively immutable shared | No |
+|_. State/Sharing |_. Not shared |_. Shared |
+| Stateless | Yes | Yes |
+| Immutable | Yes | Yes |
+| Mutable | Yes | No |
 
 h3. Sharing mutable and effectively immutable objects:
 
