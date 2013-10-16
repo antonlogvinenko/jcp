@@ -40,13 +40,14 @@ An object is *published safely* if both the reference to the object and the obje
 * storing a reference to it into a final field of a properly constructed object
 * storing a reference to it into a field that is properly guarded by a lock
 
-    
-Methods:
-    locks
-synchronized block
-synchronized method
+h3. How to solve the problem?
+
+* Don't share
+    * literally
+    * confinement: thread, stack, ad-hoc
+* Make stateless
+* Make immutable (no atomicity and visibility problems, consider correct immutability definition)
+* Effectively immutable and published safely (no atomicity problem, but visibility problem)
+* Protect mutable shared state
+    locks, synchronized block, synchronized method
 volatile
-thread confinement (ad-hoc, stack-confinement)
-make stateless
-make immutable
-safe publishing
