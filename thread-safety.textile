@@ -4,25 +4,32 @@ A class is thread safe if it **behaves correctly when accessed from multiple thr
 
 h2. State issues
 
-h3. Categories of thread safety
+h3. What's the problem?
 
 Informally, *an object's state* is its data, stored in state variables such as instance or static fields. An object's state may include fields from other, dependent objects; HashMap's state is partially stored in the HashMap object itself, but also in many Map.Entry objects. An object's state encompasses any data hat can affect its externally visible behavior.
 
-An object is *properly constructed* means that the this reference does not escape during construction.
-
-
-
-An object is *immutable* if:
-* Its state cannot be modified after construction
-* All its fields are final
-* It is properly constructed
+* Atomicity
+    * Read-modify-write
+    * Check-then-act
+* Visibility
+    * Reordering
+    * Stale data
+    * Non-atomic 64-bit operations
+    * Escape (?)
+    
+h3. Where is the problem then?
 
 | *State vs Sharing* | Not shared | Shared |
 | Stateless | Yes | Yes |
 | Immutable | Yes | Yes |
 | Mutable | Yes | *No* |
-  
-h3. Sharing mutable and effectively immutable objects:
+
+An object is *properly constructed* means that the this reference does not escape during construction.
+
+An object is *immutable* if:
+* Its state cannot be modified after construction
+* All its fields are final
+* It is properly constructed
 
 Effectively immutable objects need to be safely published in order to be safely used by any thread without synchronization.
 *Effectively immutable objects* are those not technically immutable, but whose state will not be modified after publication.
@@ -33,15 +40,9 @@ An object is *published safely* if both the reference to the object and the obje
 * storing a reference to it into a final field of a properly constructed object
 * storing a reference to it into a field that is properly guarded by a lock
 
-* Atomicity
-    * Read-modify-write
-    * Check-then-act
-* Visibility
-    * Reordering
-    * Stale data
-    * Non-atomic 64-bit operations
-
-locks
+    
+Methods:
+    locks
 synchronized block
 synchronized method
 volatile
