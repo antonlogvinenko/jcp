@@ -8,15 +8,18 @@ Informally, an object's state is its data, stored in state variables such as ins
 
 An object is *properly constructed* means that the this reference does not escape during construction.
 
+*Effectively immutable objects* are those not technically immutable, but whose state will not be modified after publication.
+
+Safely published
+
 An object is *immutable* if:
 * Its state cannot be modified after construction
 * All its fields are final
 * It is properly constructed
 
-Escape
-Definition of immutable object
-Definition of effectively immutable object
-Mutable
+
+
+Definition of escape
 
 |_. Type |_. Definition |_. Thread safety |
 | Stateless | Has no state | Thread safe |
