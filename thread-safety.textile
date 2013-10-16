@@ -10,7 +10,7 @@ Informally, *an object's state* is its data, stored in state variables such as i
 
 An object is *properly constructed* means that the this reference does not escape during construction.
 
-*Effectively immutable objects* are those not technically immutable, but whose state will not be modified after publication.
+
 
 An object is *immutable* if:
 * Its state cannot be modified after construction
@@ -25,8 +25,7 @@ An object is *immutable* if:
 h3. Sharing mutable and effectively immutable objects:
 
 Effectively immutable objects need to be safely published in order to be safely used by any thread without synchronization.
-
-
+*Effectively immutable objects* are those not technically immutable, but whose state will not be modified after publication.
 
 An object is *published safely* if both the reference to the object and the object's state are made visible to other threads at the same time. A properly constructed object can be safely published by:
 * initializing an object reference from a static initializer
