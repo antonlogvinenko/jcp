@@ -32,19 +32,17 @@ h3. State type
 |_. Type |_. Thread safe? |
 | Stateless | Always |
 | Immutable | Always |
+| Mutable not shared | Always |
+| Mutable shared | No |
 | Effectively immutable | No |
-| Mutable | No |
-
-h3. Effectively immutable
-
-Effectively immutable objects need to be safely published in order to be safely used by any thread without synchronization.
-
-h3. Mutable
 
 |_. Type |_. Thread safe? |
 | Not sharing | Always |
 | Sharing | No |
-| Escaping | No |
+
+h3. Effectively immutable
+
+Effectively immutable objects need to be safely published in order to be safely used by any thread without synchronization.
 
 h3. Sharing mutable objects:
 
