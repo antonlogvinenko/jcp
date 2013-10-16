@@ -17,7 +17,7 @@ An object is *immutable* if:
 * All its fields are final
 * It is properly constructed
 
-| State/Sharing | Not shared | Shared |
+| *State/Sharing* | Not shared | Shared |
 | Stateless | Yes | Yes |
 | Immutable | Yes | Yes |
 | Mutable | Yes | No |
