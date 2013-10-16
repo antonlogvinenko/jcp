@@ -36,7 +36,6 @@ h3. State type
 | Mutable | No |
 
 h3. Effectively immutable
-???
 
 h3. Mutable
 |_. Type |_. Thread safe? |
