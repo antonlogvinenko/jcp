@@ -17,8 +17,6 @@ An object is *immutable* if:
 * All its fields are final
 * It is properly constructed
 
-h3. State type
-
 |_. Type |_. Thread safe? |
 | Stateless | Always |
 | Immutable | Always |
