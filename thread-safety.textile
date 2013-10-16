@@ -25,11 +25,11 @@ An object is *immutable* if:
 
 Definition of escape
 
-|_. Type |_. Definition |_. Thread safety |
-| Stateless | Has no state | Thread safe |
-| Immutable | 1 2 3 | Thread safe |
-| Effectively immutable | Has no state | Minor issues |
-| Mutable | Has no state | Major issues |
+|_. Type |_. Thread safety |
+| Stateless | Thread safe |
+| Immutable | Thread safe |
+| Effectively immutable | Minor issues |
+| Mutable | Major issues |
 
 h1. Effectively immutable objects problems:
 
