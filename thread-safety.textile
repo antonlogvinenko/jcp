@@ -4,9 +4,15 @@ A class is thread safe if it **behaves correctly when accessed from multiple thr
 
 h1. State issues
 
-Informally, an object's state is its data, stored in state variables such as instance or static fields. An object's state may include fields from other, dependent objects; HashMap's state is partially stored in the HashMap object itself, but also in many Map.Entry objects. An object's state encompasses any data hat can affect its externally visible behavior.
+Informally, *an object's state* is its data, stored in state variables such as instance or static fields. An object's state may include fields from other, dependent objects; HashMap's state is partially stored in the HashMap object itself, but also in many Map.Entry objects. An object's state encompasses any data hat can affect its externally visible behavior.
 
 An object is *properly constructed* means that the this reference does not escape during construction.
+
+An object is *published safely* if both the reference to the object and the object's state are made visible to other threads at the same time. A properly constructed object can be safely published by:
+* initializing an object reference from a static initializer
+* storing a reference to it into a volatile field or AtomicReference
+* storing a reference to it into a final field of a properly constructed object
+* storing a reference to it into a field that is properly guarded by a lock
 
 *Effectively immutable objects* are those not technically immutable, but whose state will not be modified after publication.
 
