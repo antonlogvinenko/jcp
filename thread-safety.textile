@@ -36,6 +36,7 @@ h3. State type
 | Mutable | No |
 
 h3. Effectively immutable
+
 Effectively immutable objects need to be safely published in order to be safely used by any thread without synchronization.
 
 h3. Mutable
