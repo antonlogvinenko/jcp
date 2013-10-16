@@ -35,9 +35,10 @@ h3. State type
 | Effectively immutable | No |
 | Mutable | No |
 
-h3. Effectively immutable
+h3. Effectively immutablee
 
 h3. Mutable
+
 |_. Type |_. Thread safe? |
 | Not sharing | Always |
 | Sharing | No |
