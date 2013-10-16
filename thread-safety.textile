@@ -4,6 +4,8 @@ A class is thread safe if it **behaves correctly when accessed from multiple thr
 
 h1. State issues
 
+h2. Vocabulary
+
 Informally, *an object's state* is its data, stored in state variables such as instance or static fields. An object's state may include fields from other, dependent objects; HashMap's state is partially stored in the HashMap object itself, but also in many Map.Entry objects. An object's state encompasses any data hat can affect its externally visible behavior.
 
 An object is *properly constructed* means that the this reference does not escape during construction.
@@ -21,9 +23,9 @@ An object is *immutable* if:
 * All its fields are final
 * It is properly constructed
 
-
-
 Definition of escape
+
+h2. Categories of thread safety
 
 |_. Type |_. Thread safe |
 | Stateless | Always |
