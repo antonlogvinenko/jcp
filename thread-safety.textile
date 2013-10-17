@@ -22,11 +22,12 @@ Race conditions:
  ** Escape
     
 h3. Where is the problem then?
-Is code thread safe?
+Is an object thread safe?
 | *State vs Sharing* | Not shared | Shared |
 | Stateless | Yes | Yes |
 | Immutable | Yes | Yes |
 | Mutable | Yes | *No* |
+Only shared mutable objects have issues with atomicity and visibility.
 
 An object is *immutable* if:
 * Its state cannot be modified after construction
@@ -38,8 +39,11 @@ An object is *properly constructed* means that the this reference does not escap
 h3. So what do we do?
 
 * Stop sharing
-    * literally
-    * confinement: thread, stack, ad-hoc
+ ** Literally
+ ** Use confinement
+  *** Thread
+  *** Stack
+  *** Ad-hoc
 * Make stateless
 * Make immutable (no atomicity and visibility problems, consider correct immutability definition)
 * Effectively immutable and published safely (no atomicity problem, but visibility problem)
