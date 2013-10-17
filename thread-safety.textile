@@ -19,7 +19,7 @@ Race conditions:
  ** Stale data
  ** Non-atomic
  ** 64-bit operations
- ** escape
+ ** Escape
     
 h3. Where is the problem then?
 
