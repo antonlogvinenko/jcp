@@ -35,9 +35,9 @@ An object is *immutable* if:
 
 An object is *properly constructed* means that the this reference does not escape during construction.
 
-h3. How to solve the problem?
+h3. So what do we do?
 
-* Don't share
+* Stop sharing
     * literally
     * confinement: thread, stack, ad-hoc
 * Make stateless
