@@ -15,9 +15,9 @@ Race conditions:
  ** Check-then-act
  ** Compound actions
 * Visibility
- ** reordering
- ** stale data
- ** non-atomic
+ ** Reordering
+ ** Stale data
+ ** Non-atomic
  ** 64-bit operations
  ** escape
     
