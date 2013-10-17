@@ -9,11 +9,11 @@ h3. So what's the problem?
 Informally, *an object's state* is its data, stored in state variables such as instance or static fields. An object's state may include fields from other, dependent objects; HashMap's state is partially stored in the HashMap object itself, but also in many Map.Entry objects. An object's state encompasses any data hat can affect its externally visible behavior.
 
 * Atomicity
- ** Race conditions
+Operations *A and B are atomic* with respect to each other if, from the perspective of a thread executing A, when another thread executes B,either all of B has executed or none of it has. An *atomic operation* is one that is atomic with respect to all operations, including itself, that operate on the same state.
+Race conditions:
  ** Read-modify-write
  ** Check-then-act
  ** Compound actions
-Operations *A and B are atomic* with respect to each other if, from the perspective of a thread executing A, when another thread executes B,either all of B has executed or none of it has. An *atomic operation* is one that is atomic with respect to all operations, including itself, that operate on the same state.
 * Visibility
  ** reordering
  ** stale data
