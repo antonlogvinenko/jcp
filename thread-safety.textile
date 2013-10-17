@@ -9,7 +9,7 @@ h3. So what's the problem?
 Informally, *an object's state* is its data, stored in state variables such as instance or static fields. An object's state may include fields from other, dependent objects; HashMap's state is partially stored in the HashMap object itself, but also in many Map.Entry objects. An object's state encompasses any data hat can affect its externally visible behavior.
 
 * Atomicity
- **read-modify-write
+ ** read-modify-write
  ** check-then-act
 * Visibility
  ** reordering
