@@ -10,9 +10,10 @@ Informally, *an object's state* is its data, stored in state variables such as i
 
 * Atomicity
  ** Race conditions
- ** read-modify-write
- ** check-then-act
-Operations A and B are atomic with respect to each other if, from the perspective of a thread executing A, when another thread executes B,either all of B has executed or none of it has. An atomic operation is one that is atomic with respect to all operations, including itself, that operate on the same state.
+ ** Read-modify-write
+ ** Check-then-act
+ ** Compound actions
+Operations *A and B are atomic* with respect to each other if, from the perspective of a thread executing A, when another thread executes B,either all of B has executed or none of it has. An *atomic operation* is one that is atomic with respect to all operations, including itself, that operate on the same state.
 * Visibility
  ** reordering
  ** stale data
