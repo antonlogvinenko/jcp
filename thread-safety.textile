@@ -22,7 +22,7 @@ Race conditions:
  ** Escape
     
 h3. Where is the problem then?
-
+Is code thread safe?
 | *State vs Sharing* | Not shared | Shared |
 | Stateless | Yes | Yes |
 | Immutable | Yes | Yes |
