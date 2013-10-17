@@ -39,13 +39,16 @@ An object is *properly constructed* means that the this reference does not escap
 h3. So what do we do?
 
 * Stop sharing
- ** Literally
+ ** Literally. I mean it, just don't share.
  ** Use confinement
   *** Thread
   *** Stack
   *** Ad-hoc
 * Make stateless
-* Make immutable (no atomicity and visibility problems, consider correct immutability definition)
+* Make immutable
+ ** no atomicity problems
+ ** no visibility problems
+ ** consider correct immutability definition
 * Effectively immutable and published safely (no atomicity problem, but visibility problem)
 * Protect mutable shared state
     locks, synchronized block, synchronized method
