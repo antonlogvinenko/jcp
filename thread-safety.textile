@@ -24,6 +24,7 @@ Race conditions:
 h3. Where is the problem then?
 
 Is an object thread safe?
+
 | *State vs Sharing* | Not shared | Shared |
 | Stateless | Yes | Yes |
 | Immutable | Yes | Yes |
