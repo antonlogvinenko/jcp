@@ -29,6 +29,7 @@ Is an object thread safe?
 | Stateless | Yes | Yes |
 | Immutable | Yes | Yes |
 | Mutable | Yes | *No* |
+
 Only shared mutable objects have issues with atomicity and visibility.
 
 An object is *immutable* if:
