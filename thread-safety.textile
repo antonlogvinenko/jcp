@@ -22,6 +22,7 @@ Race conditions:
  ** Escape
     
 h3. Where is the problem then?
+
 Is an object thread safe?
 | *State vs Sharing* | Not shared | Shared |
 | Stateless | Yes | Yes |
@@ -49,6 +50,7 @@ h3. So what do we do?
  ** no atomicity problems
  ** no visibility problems
  ** consider correct immutability definition
+
 * Effectively immutable and published safely (no atomicity problem, but visibility problem)
 * Protect mutable shared state
     locks, synchronized block, synchronized method
