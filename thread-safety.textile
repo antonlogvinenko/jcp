@@ -61,3 +61,8 @@ Avoding the *state escape*:
  ** storing a reference to it into a volatile field or AtomicReference
  ** storing a reference to it into a final field of a properly constructed object
  ** storing a reference to it into a field that is properly guarded by a lock
+
+h3. Not covered yet
+* volatile
+* final in immutable
+* properly constructed immutable, safely published effectively immutable, safey published and protected mutable
