@@ -14,13 +14,13 @@ Race conditions:
  ** Read-modify-write
  ** Check-then-act
  ** Compound actions
+ ** Non-atomic 64-bit operations
 * Visibility
+ ** Stale data (like "read_uncommited", caches?)
  ** Reordering
- ** Stale data
- ** Non-atomic
- ** 64-bit operations
  ** Escape
-    
+ ** Non-atomic 64-bit operations
+ 
 h3. Where is the problem then?
 
 Is an object thread safe?
@@ -40,27 +40,28 @@ An object is *immutable* if:
 An object is *properly constructed* means that the this reference does not escape during construction.
 
 h3. So what do we do?
-
+* Make stateless
 * Stop sharing
- ** Literally. I mean it, just don't share.
+ ** Literally
  ** Use confinement
   *** Thread
   *** Stack
   *** Ad-hoc
-* Make stateless
-* Make immutable
- ** no atomicity problems
- ** no visibility problems
- ** consider correct immutability definition
-
-* Effectively immutable and published safely (no atomicity problem, but visibility problem)
-* Protect mutable shared state
- ** Every shared, mutable variable should be guarded by lock
- ** For every invariant that involves more than one variable, all the variables involved in that invariant must be guarded by the same lock
- ** Performance and liveness aspects should be considered when implementing
-  *** There is a tension between performance and simplicity
-  *** Consider it, but resist to prematurely sacrifice simplicity for the sake of performance
-  *** Avoid holding locks during long computations or operations such as IO
+* Make immutable, definition of immutability:
+ ** state can't be modified after construction
+ ** all fields are final
+ ** properly constructed
+* Mutable
+ ** Read-only (effectively immutable) --- requires safe publishing
+ ** Read and write
+  *** Safe publishing
+  *** Protect mutable state
+   **** Every shared, mutable variable should be guarded by lock
+   **** For every invariant that involves more than one variable, all the variables involved in that invariant must be guarded by the same lock
+   **** Performance and liveness aspects should be considered when implementing
+    **** There is a tension between performance and simplicity
+    **** Consider it, but resist to prematurely sacrifice simplicity for the sake of performance
+    **** Avoid holding locks during long computations or operations such as IO
  
 Effectively immutable objects need to be safely published in order to be safely used by any thread without synchronization.
 *Effectively immutable objects* are those not technically immutable, but whose state will not be modified after publication.
