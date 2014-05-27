@@ -52,7 +52,7 @@ h3. What should I do?
     **** Consider it, but resist to prematurely sacrifice simplicity for the sake of performance
     **** Avoid holding locks during long computations or operations such as IO
 
-Avoding state escape:
+Avoding the *state escape*:
 * **Properly constructing** -- an object is *properly constructed* if _this_ reference does not escape during construction. Examples:
  ** _this_ reference explicitly escapes -- used to register instance as a listener
  ** _this_ reference implicitly escapes -- inner class instance using _this_ class methods is passed
