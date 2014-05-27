@@ -39,12 +39,12 @@ h3. What should I do?
 * Make immutable, all of (definition of immutability):
  ** state can't be modified after construction
  ** all fields are final
- ** properly constructed
+ ** *properly constructed*
 * If mutable
  ** If read-only (*effectively immutable*) -- make it safely published
  ** Otherwise if writes and reads are going to be made from separate threads, all of:
   *** *Safely published*
-  *** Protect mutable state
+  *** *Protect mutable state*
    **** Every shared, mutable variable should be guarded by lock
    **** For every invariant that involves more than one variable, all the variables involved in that invariant must be guarded by the same lock
    **** Performance and liveness aspects should be considered when implementing
