@@ -33,13 +33,13 @@ Is an object thread safe?
 
 h3. So what do we do?
 * Make stateless
-* Stop sharing
- ** Literally
- ** Use confinement
+* Stop sharing, any of:
+ ** Not sharing at all
+ ** Use confinement, any of:
   *** Thread
   *** Stack
   *** Ad-hoc
-* Make immutable, definition of immutability:
+* Make immutable, any of (definition of immutability):
  ** state can't be modified after construction
  ** all fields are final
  ** properly constructed
@@ -60,10 +60,12 @@ An object is *immutable* if:
 * All its fields are final
 * It is properly constructed
 
-An object is *properly constructed* means that the this reference does not escape during construction.
-    
-An object is *published safely* if both the reference to the object and the object's state are made visible to other threads at the same time. A properly constructed object can be safely published by:
-* initializing an object reference from a static initializer
-* storing a reference to it into a volatile field or AtomicReference
-* storing a reference to it into a final field of a properly constructed object
-* storing a reference to it into a field that is properly guarded by a lock
+Avoding state escape:
+* Properly constructing -- an object is *properly constructed* if **this** reference does not escape during construction. Examples:
+ ** **this** reference explicitly escapes -- used to register instance as a listener
+ ** **this** reference implicitly escapes -- inner class instance using **this** class methods is passed
+* *Publishing safely*: both the reference to the object and the object's state are made visible to other threads at the same time. A properly constructed object can be safely published by:
+ ** initializing an object reference from a static initializer
+ ** storing a reference to it into a volatile field or AtomicReference
+ ** storing a reference to it into a final field of a properly constructed object
+ ** storing a reference to it into a field that is properly guarded by a lock
