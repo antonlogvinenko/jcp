@@ -30,14 +30,6 @@ Is an object thread safe?
 | Immutable | Yes | Yes |
 | Mutable | Yes | *No* |
 
-Only shared mutable objects have issues with atomicity and visibility.
-
-An object is *immutable* if:
-* Its state cannot be modified after construction
-* All its fields are final
-* It is properly constructed
-
-An object is *properly constructed* means that the this reference does not escape during construction.
 
 h3. So what do we do?
 * Make stateless
@@ -51,10 +43,10 @@ h3. So what do we do?
  ** state can't be modified after construction
  ** all fields are final
  ** properly constructed
-* Mutable
- ** Read-only (effectively immutable) --- requires safe publishing
- ** Read and write
-  *** Safe publishing
+* If mutable
+ ** If read-only (effectively immutable) -- safely published
+ ** Otherwise if write and read needs to be performed from threads
+  *** Safely published
   *** Protect mutable state
    **** Every shared, mutable variable should be guarded by lock
    **** For every invariant that involves more than one variable, all the variables involved in that invariant must be guarded by the same lock
@@ -62,10 +54,14 @@ h3. So what do we do?
     **** There is a tension between performance and simplicity
     **** Consider it, but resist to prematurely sacrifice simplicity for the sake of performance
     **** Avoid holding locks during long computations or operations such as IO
- 
-Effectively immutable objects need to be safely published in order to be safely used by any thread without synchronization.
-*Effectively immutable objects* are those not technically immutable, but whose state will not be modified after publication.
 
+An object is *immutable* if:
+* Its state cannot be modified after construction
+* All its fields are final
+* It is properly constructed
+
+An object is *properly constructed* means that the this reference does not escape during construction.
+    
 An object is *published safely* if both the reference to the object and the object's state are made visible to other threads at the same time. A properly constructed object can be safely published by:
 * initializing an object reference from a static initializer
 * storing a reference to it into a volatile field or AtomicReference
