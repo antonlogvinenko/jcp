@@ -36,7 +36,7 @@ h3. What should I do?
   *** Thread
   *** Stack
   *** Ad-hoc
-* Make immutable, any of (definition of immutability):
+* Make immutable, all of (definition of immutability):
  ** state can't be modified after construction
  ** all fields are final
  ** properly constructed
@@ -52,13 +52,8 @@ h3. What should I do?
     **** Consider it, but resist to prematurely sacrifice simplicity for the sake of performance
     **** Avoid holding locks during long computations or operations such as IO
 
-An object is *immutable* if:
-* Its state cannot be modified after construction
-* All its fields are final
-* It is properly constructed
-
 Avoding state escape:
-* Properly constructing -- an object is *properly constructed* if _this_ reference does not escape during construction. Examples:
+* **Properly constructing** -- an object is *properly constructed* if _this_ reference does not escape during construction. Examples:
  ** _this_ reference explicitly escapes -- used to register instance as a listener
  ** _this_ reference implicitly escapes -- inner class instance using _this_ class methods is passed
 * *Publishing safely*: both the reference to the object and the object's state are made visible to other threads at the same time. A properly constructed object can be safely published by:
