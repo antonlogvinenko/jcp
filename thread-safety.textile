@@ -4,7 +4,7 @@ A class is thread safe if it **behaves correctly when accessed from multiple thr
 
 h2. State issues
 
-h3. So what's the problem?
+h3. What's the problem?
 
 Informally, *an object's state* is its data, stored in state variables such as instance or static fields. An object's state may include fields from other, dependent objects; HashMap's state is partially stored in the HashMap object itself, but also in many Map.Entry objects. An object's state encompasses any data hat can affect its externally visible behavior.
 
@@ -21,7 +21,7 @@ Race conditions:
  ** Escape
  ** Non-atomic 64-bit operations
  
-h3. Where is the problem then?
+h3. Where is the problem?
 
 Is an object thread safe?
 
@@ -31,7 +31,7 @@ Is an object thread safe?
 | Mutable | Yes | *No* |
 
 
-h3. So what do we do?
+h3. What should I do?
 * Make stateless
 * Stop sharing, any of:
  ** Not sharing at all
