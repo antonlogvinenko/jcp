@@ -48,9 +48,9 @@ h3. What should I do?
    **** Every shared, mutable variable should be guarded by lock
    **** For every invariant that involves more than one variable, all the variables involved in that invariant must be guarded by the same lock
    **** Performance and liveness aspects should be considered when implementing
-    **** There is a tension between performance and simplicity
-    **** Consider it, but resist to prematurely sacrifice simplicity for the sake of performance
-    **** Avoid holding locks during long computations or operations such as IO
+    ***** There is a tension between performance and simplicity
+    ***** Consider it, but resist to prematurely sacrifice simplicity for the sake of performance
+    ***** Avoid holding locks during long computations or operations such as IO
 
 Avoding the *state escape*:
 * **Properly constructing** -- an object is *properly constructed* if _this_ reference does not escape during construction. Examples:
