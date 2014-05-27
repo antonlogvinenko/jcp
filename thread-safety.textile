@@ -59,7 +59,7 @@ An object is *immutable* if:
 
 Avoding state escape:
 * Properly constructing -- an object is *properly constructed* if **this** reference does not escape during construction. Examples:
- ** **this** reference explicitly escapes -- used to register instance as a listener
+ ** _this_ reference explicitly escapes -- used to register instance as a listener
  ** **this** reference implicitly escapes -- inner class instance using **this** class methods is passed
 * *Publishing safely*: both the reference to the object and the object's state are made visible to other threads at the same time. A properly constructed object can be safely published by:
  ** initializing an object reference from a static initializer
