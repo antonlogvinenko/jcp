@@ -16,7 +16,6 @@ Race conditions:
 * Visibility
  ** Stale data (like "read_uncommited", caches?)
  ** Reordering
- ** Escape
  ** Non-atomic 64-bit operations
  
 h3. Where is the problem?
