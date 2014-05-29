@@ -38,7 +38,7 @@ h3. What should I do?
   *** Ad-hoc
 * Make immutable, all of (definition of immutability):
  ** state can't be modified after construction
- ** all fields are final
+ ** all fields are final (guarantees safe publication -- consider it's special JMM semantics)
  ** *properly constructed*
 * If mutable
  ** If read-only (aka *effectively immutable*) -- make it *safely published*
@@ -64,5 +64,3 @@ Avoding the *state escape*:
 
 h3. Not covered yet
 * volatile
-* final in immutable
-* properly constructed immutable, safely published effectively immutable, safey published and protected mutable
