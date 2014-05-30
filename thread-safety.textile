@@ -1,6 +1,6 @@
 h3. Thread safety
 
-A class is thread safe if it **behaves correctly when accessed from multiple threads**, regardless of the scheduling or interleaving of the execution of those threads by the runtime environment, and with no additional synchronization or other coordination on the part of the calling code.
+A class is thread safe if it *behaves correctly when accessed from multiple threads*, regardless of the scheduling or interleaving of the execution of those threads by the runtime environment, and with no additional synchronization or other coordination on the part of the calling code.
 
 h3. Where is the problem?
 
@@ -48,7 +48,7 @@ h3. What should I do?
 
 h3. Some definitions
 
-Immutable object
+Immutable object:
  * state can't be modified after construction
  * all fields are final (guarantees *safe publication* -- consider it's special JMM semantics)
  * *properly constructed*
@@ -56,7 +56,7 @@ Immutable object
 Effectively immutable object -- read-only
  
 Avoding the *state escape*:
-* **Properly constructing** -- an object is *properly constructed* if _this_ reference does not escape during construction. Examples:
+* *Properly constructing* -- an object is properly constructed if _this_ reference does not escape during construction. Examples:
  ** _this_ reference explicitly escapes -- used to register instance as a listener
  ** _this_ reference implicitly escapes -- inner class instance using _this_ class methods is passed
 * *Publishing safely*: both the reference to the object and the object's state are made visible to other threads at the same time. A properly constructed object can be safely published by:
@@ -68,7 +68,7 @@ Avoding the *state escape*:
 
 h3. Tools at your disposal
 * synchronization, locks -- atomicity, visibility
-* final -- reference to the owning object is guaranteed to be visible **after** the field is initialized
+* final -- reference to the owning object is guaranteed to be visible *after* the field is initialized
 * volatile
  ** not reordered operations, not cached, visible to every thread
  ** extended sematntics: write -- enter synchronized block, reading -- exiting synchronized block
