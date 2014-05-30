@@ -47,6 +47,7 @@ h3. What should I do?
   *** syncrhonization (mutable)
 
 h3. Some definitions
+
 Immutable object
  * state can't be modified after construction
  * all fields are final (guarantees *safe publication* -- consider it's special JMM semantics)
