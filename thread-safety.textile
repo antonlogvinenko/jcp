@@ -36,31 +36,39 @@ h3. What should I do?
   *** Thread
   *** Stack
   *** Ad-hoc
-* Make immutable, all of (definition of immutability):
- ** state can't be modified after construction
- ** all fields are final (guarantees safe publication -- consider it's special JMM semantics)
- ** *properly constructed*
-* If mutable
- ** If read-only (aka *effectively immutable*) -- make it *safely published*
- ** Otherwise if writes and reads are going to be made from separate threads, all of:
-  *** *Safely published*
-  *** *Protect mutable state*
-   **** Every shared, mutable variable should be guarded by lock
-   **** For every invariant that involves more than one variable, all the variables involved in that invariant must be guarded by the same lock
-   **** Performance and liveness aspects should be considered when implementing
-    ***** There is a tension between performance and simplicity
-    ***** Consider it, but resist to prematurely sacrifice simplicity for the sake of performance
-    ***** Avoid holding locks during long computations or operations such as IO
+* If shared
+ ** 3 types of objects
+  *** immutable
+  *** effectively immutable
+  *** mutable
+ ** What must be done
+  *** proper construction
+  *** safe publication
+  *** syncrhonization (mutable)
 
+h3. Some definitions
+Immutable object
+ * state can't be modified after construction
+ * all fields are final (guarantees *safe publication* -- consider it's special JMM semantics)
+ * *properly constructed*
+
+Effectively immutable object -- read-only
+ 
 Avoding the *state escape*:
 * **Properly constructing** -- an object is *properly constructed* if _this_ reference does not escape during construction. Examples:
  ** _this_ reference explicitly escapes -- used to register instance as a listener
  ** _this_ reference implicitly escapes -- inner class instance using _this_ class methods is passed
 * *Publishing safely*: both the reference to the object and the object's state are made visible to other threads at the same time. A properly constructed object can be safely published by:
  ** initializing an object reference from a static initializer
- ** storing a reference to it into a volatile field or AtomicReference
- ** storing a reference to it into a final field of a properly constructed object
- ** storing a reference to it into a field that is properly guarded by a lock
+ ** storing a reference to it into a **volatile field**
+ ** storing a reference to it into an **AtomicReference**
+ ** storing a reference to it into a **final field of a properly constructed object**
+ ** storing a reference to it into a **field that is properly guarded by a lock**
 
-h3. Not covered yet
+h3. Tools at your disposal
+* synchronization, locks -- atomicity, visibility
+* final -- reference to the owning object is guaranteed to be visible **after** the field is initialized
 * volatile
+ ** not reordered operations, not cached, visible to every thread
+ ** extended sematntics: write -- enter synchronized block, reading -- exiting synchronized block
+ ** can points listed above be grouped as "volatile is visibility semantics of syncrhonized block"?
