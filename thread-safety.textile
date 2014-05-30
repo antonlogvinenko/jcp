@@ -61,10 +61,10 @@ Avoding the *state escape*:
  ** _this_ reference implicitly escapes -- inner class instance using _this_ class methods is passed
 * *Publishing safely*: both the reference to the object and the object's state are made visible to other threads at the same time. A properly constructed object can be safely published by:
  ** initializing an object reference from a static initializer
- ** storing a reference to it into a *volatile field*
- ** storing a reference to it into an *AtomicReference*
- ** storing a reference to it into a *final field of a properly constructed object*
- ** storing a reference to it into a *field that is properly guarded by a lock*
+ ** storing a reference to it into a _volatile field_
+ ** storing a reference to it into an _AtomicReference_
+ ** storing a reference to it into a _final field of a properly constructed object_
+ ** storing a reference to it into a _field that is properly guarded by a lock_
 
 h3. Tools at your disposal
 * synchronization, locks -- atomicity, visibility
