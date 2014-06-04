@@ -5,3 +5,4 @@ This repository is intended for storing results of an undergoing work of organiz
 
 * [Why concurrency](why.md)
 * [Thread safety basics](thread-safety.textile)
+* [Composing objects](composition.textile)
