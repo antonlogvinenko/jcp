@@ -1,1 +1,3 @@
+h2. Composing objects
 
+h3. Designing a Thread-safe Class
