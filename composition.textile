@@ -1,3 +1,26 @@
 h2. Composing objects
 
 h3. Designing a Thread-safe Class
+What is object's state? State starts with fields
+* If they are of primitive types
+* If the object has fields that are references to other objects, its state will encompass fields from the referenced objects as well (consider state ownership)
+
+Ownership
+* Responsible for
+* Split ownership
+
+Types of state:
+* Fields
+* Set of fields
+
+State synchronization requirements
+* Invariants validate state space
+* Post conditions validate state transitions
+* Pre-conditions
+
+Designing a thread-safe class:
+* Identify object's state
+* Identify the invariants, post- and pre-conditions that constraint object's state
+* Establish a policy for managing concurrent access to the object's state
+
+h3. Instance confinement
