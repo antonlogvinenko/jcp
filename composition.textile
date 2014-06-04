@@ -30,9 +30,11 @@ Types, may be confined to:
 * lexical scope
 * thread
 
-Why use confinement? All codes pathes that lead to confined object are known and can be analyzed. Combined confinement and locking can ensure that non-thread-safe objects are used in a thread-safe manner. Java monitor pattern may be used for synchronization.
+Why use confinement? All codes pathes that lead to confined object are known and can be analyzed. Combined confinement and locking can ensure that non-thread-safe objects are used in a thread-safe manner. Java monitor pattern may be used for synchronization. But private locks has an advantage in that they are encapsulated (monitor is not). Also, copying may be used.
 
 h3. Delegating thread safety (thread safe components)
+
+
 
 h3. Adding functionality to thread safe classes
 
