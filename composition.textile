@@ -25,6 +25,7 @@ Designing a thread-safe class:
 * Establish a policy for managing concurrent access to the object's state
 
 h3. Instance confinement (not thread safe components)
+
 Types, may be confined to:
 * class instance
 * lexical scope
