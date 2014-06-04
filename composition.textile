@@ -45,7 +45,30 @@ Disadvantages:
 
 h3. Adding functionality to thread safe classes
 
-
-
+Several ways:
+* Modify the original class
+ ** Advantages:
+  *** All synchronization policy stays in a single class
+ ** Disadvantages:
+  *** Not always possible
+  *** Need to understand defined synchronization policy
+* Extend the class
+ ** Disadvantages:
+  *** Not always possible
+  *** Synchronization policy is split now, can change and break both classes
+* Client side locking - wrap, synchronize with wrapped object monitor
+ ** Disadvantes:
+  *** Very fragile, synchronization is put in a class totally unrelated to the original one
+* Composition - use intrinsic locking, delegate
+ ** Advantages:
+  *** Not fragile
 
 h3. Documenting synchronization policies
+
+Document:
+* thread safety guarantees for clients
+* synchronization policy for maintainers
+
+Interpreting Vague Documentation, "it would be absued if it weren't"
+* See how your code was intended to be used. Does it have to be thread-safe?
+* Interpret the specification from the perspective of someone who implemented it. Is it thread-safe?
