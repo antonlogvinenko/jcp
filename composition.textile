@@ -35,8 +35,17 @@ Why use confinement? All codes pathes that lead to confined object are known and
 
 h3. Delegating thread safety (thread safe components)
 
+Advantages:
+* Idea: we can delegat thread safety to a thread safe class (concurrent collection, for example).
+* We can also delegate to more than one underlying state variable as long as those underlying variables are independent.
+* If a state variables is thread-safe, does not participate in any invariants, post-conditions, it can be safely published
 
+Disadvantages:
+* But if a class has compound state, delegating fails (is not not enough)
 
 h3. Adding functionality to thread safe classes
+
+
+
 
 h3. Documenting synchronization policies
