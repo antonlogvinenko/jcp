@@ -24,4 +24,16 @@ Designing a thread-safe class:
 * Identify the invariants, post- and pre-conditions that constraint object's state
 * Establish a policy for managing concurrent access to the object's state
 
-h3. Instance confinement
+h3. Instance confinement (not thread safe components)
+Types, may be confined to:
+* class instance
+* lexical scope
+* thread
+
+Why use confinement? All codes pathes that lead to confined object are known and can be analyzed. Combined confinement and locking can ensure that non-thread-safe objects are used in a thread-safe manner. Java monitor pattern may be used for synchronization.
+
+h3. Delegating thread safety (thread safe components)
+
+h3. Adding functionality to thread safe classes
+
+h3. Documenting synchronization policies
