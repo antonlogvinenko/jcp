@@ -16,6 +16,30 @@ Problems of synchronized collections
 
 h3. Concurrent collections
 
+Replacing synchronized collections with concurrent offers dramatic scalability improvements with little risk.
+Examples:
+* ConcurrentHashMap, CopyOnWriteArrayList
+* BlockingQueue, ConcurrentLinkedQueue, PriorityQueue
+* ConcurrentSkipListMap, ConcurrentSkipListSet
+
+ConcurrentHashMap
+Uses a finer-grained locking mechanism called lock striping to allow a greater degree of shared access.
+* many readers can acceess list concurrently
+* readers may access map concurrently with writers
+* a limited number of threads can access map concurrently
+* some atomic operation: putIfAbsent, removeIfEqual, replaceIfEqual
+* Iterators are weakly consistent:
+ ** tolerates concurrent modification
+ ** traverses elements as they existed when the iterator was constructed
+ ** (not guaranteed) reflects modification to the collection after the construction of iterator
+
+Disadvantages:
+* size() may return an approximation instead of an exact count - weakened semantics to improve performance for the most important operations: get, put, containsKey, remove
+* not possible to lock the whole collection for an atomic operation (possible for synchronized collections) (reasonable tradeoff)
+
+CopyOnWriteArraylist
+
+
 h3.
 
 h3.
