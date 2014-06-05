@@ -22,7 +22,8 @@ Examples:
 * BlockingQueue, ConcurrentLinkedQueue, PriorityQueue
 * ConcurrentSkipListMap, ConcurrentSkipListSet
 
-ConcurrentHashMap
+h4. ConcurrentHashMap
+
 Uses a finer-grained locking mechanism called lock striping to allow a greater degree of shared access.
 * many readers can acceess list concurrently
 * readers may access map concurrently with writers
@@ -37,13 +38,18 @@ Disadvantages:
 * size() may return an approximation instead of an exact count - weakened semantics to improve performance for the most important operations: get, put, containsKey, remove
 * not possible to lock the whole collection for an atomic operation (possible for synchronized collections) (reasonable tradeoff)
 
-CopyOnWriteArraylist
+h4. CopyOnWriteArraylist
 
+What is it
+* Derives thread safety from the fact that properly constructed and safely published effectively immutable object is thread safe (reading operations)
+* Mutability is implemented by creating and republishing a new copy.
 
-h3.
+Eliminates doing anything to safely iterate collection
+* the need to copy collection
+* the need to synchronize
 
-h3.
+h3. Blocking queues, producer-consumer pattern
 
-h3.
+h3. Blocking and interruptible methods
 
-h3. 
+h3. Synchronizers
