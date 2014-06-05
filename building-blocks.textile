@@ -14,7 +14,7 @@ Problems of synchronized collections
   ** Copying (may require syncrhonization as well), has own performance penalty
  * Also, there are hidden iterators
 
-h3.
+h3. Concurrent collections
 
 h3.
 
