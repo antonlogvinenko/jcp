@@ -1,1 +1,25 @@
+h2. Building blocks (delegating thread safety to existing thread safe classes)
 
+h3. Synchronized collections
+
+Source of magic - *Collections.synchronizedXxx* factory methods Encapsulates the state of collection and sycnrhonizes all methods accessing state.
+
+Problems of synchronized collections
+ * Returned iterators use modification count 1) are fail-fast, throw ConcurrentModificationException 2) no sync for counts, may see stale data
+ * That's the reason you May need
+  ** Additional client-side locking to guard compound actions (iteration, navigation, conditional operations)
+   *** Client side locking for compound actions may hurt performance
+   *** Client side locking for compound actions may lead to high contention and hurt scalability
+   *** Client side locking _acting_ on elements may lead to deadlock (_acting_ may lock on smth else)
+  ** Copying (may require syncrhonization as well), has own performance penalty
+ * Also, there are hidden iterators
+
+h3.
+
+h3.
+
+h3.
+
+h3.
+
+h3. 
