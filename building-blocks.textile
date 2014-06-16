@@ -105,8 +105,8 @@ When the external event completes, the thread is placed back in the RUNNABLE sta
 Blocking can't be stopped but can be interrupted. Interruption is cooperative
 * Initiate interruption. Call t.interrupt() to set interrupt flag of thred t.
 * Handle interruption. If your method *m* invokes method that throws InterruptedException then *m* is blocking too.
- * Propagate the *InterruptedException*. Or catch it and rethrow after cleaning up.
- * Restore the interrupt after catching *InterruptedException*.
+** Propagate the *InterruptedException*. Or catch it and rethrow after cleaning up.
+** Restore the interrupt after catching *InterruptedException*.
 
 *Don't just catch InterruptedException and do nothing after it. This deprices code higher the stack. Allowed only if you're extending Thread class.*
 
