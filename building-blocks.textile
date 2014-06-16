@@ -92,6 +92,7 @@ Implementations:
 
 
 h3. Blocking and interruptible methods
+
 Reasons threads block: waiting for IO completion, waiting to acquire lock, waiting to wake up from Thread.sleep, waiting for result of a computation in another Thread.
 
 When a thread blocks, it has on of 3 states:
