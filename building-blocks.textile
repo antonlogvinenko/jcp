@@ -50,6 +50,64 @@ Eliminates doing anything to safely iterate collection
 
 h3. Blocking queues, producer-consumer pattern
 
+Methods:
+* blocking *put* (blocks on full queue) and *get* (blocks on empty queue)
+* timed *offer* and *poll*
+
+Queues:
+* bounded
+* unbounded (can never be full)
+
+h4. Producer-consumer patterh
+
+Consumers place data onto the queue as it is available, producers retrieve data when they are ready
+* Removes code dependencies between consumer and producer (types, amount, the presence)
+* And at the same time it simplifies workload management
+* Sufficient internal syncrhonization to facilitate serial thread confinement for handing off ownership from consumers to producers
+ ** Publishing safely
+ ** Only 1 consumer will access it
+ ** Producer thread does not access it after hand off
+
+Implemenations:
+* LinkedBlockingQueue, ArrayBlockingQueue - FIFO queues
+* PriorityBlockingQueues - other than FIFO order
+* SinchronousQueue
+ ** What is it
+  *** No storage for elements
+  *** Maintains list of queued threads waiting to enqueue or dequeue an element
+ ** Advantages
+  *** Reduces latency for moving data
+  *** Feeds back more information about the state of the task to the producer
+  *** No storage capacity
+
+h4. Work stealing pattern
+
+Each consumer has it's own deque. When a consumer exhausts the work in its own deque, it steals the work from other deques, from the side other than is accessed by the owner of that deque. It's more scalable than producer-consumer:
+* Reduces contention accessing single queue
+* Reduces contention accessing deque of another thread
+* Fits when consumers are producers of the same units of work that can be published back to the deque
+
+Implementations:
+* ArrayDeque, LinkedBlockingDeque
+
+
 h3. Blocking and interruptible methods
+Reasons threads block: waiting for IO completion, waiting to acquire lock, waiting to wake up from Thread.sleep, waiting for result of a computation in another Thread.
+
+When a thread blocks, it has on of 3 states:
+* BLOCKED
+* WAITING
+* TIMED_WAITING
+
+When the external event completes, the thread is placed back in the RUNNABLE state.
+
+Blocking can't be stopped but can be interrupted. Interruption is cooperative
+* Initiate interruption. Call t.interrupt() to set interrupt flag of thred t.
+* Handle interruption. If your method *m* invokes method that throws InterruptedException then *m* is blocking too.
+ * Propagate the *InterruptedException*. Or catch it and rethrow after cleaning up.
+ * Restore the interrupt after catching *InterruptedException*.
+
+*Don't just catch InterruptedException and do nothing after it. This deprices code higher the stack. Allowed only if you're extending Thread class.*
+
 
 h3. Synchronizers
