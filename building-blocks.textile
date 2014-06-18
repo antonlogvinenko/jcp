@@ -119,7 +119,7 @@ A synchronizer is any object that coordinates the control flow of threads based 
 
 h4. Latches
 
-Delays the progress of threads until it reaches its terminal state. Ensures that some activities do not proceed until other one-time activities complete.
+Delays the progress of threads until it reaches its terminal state. Ensures that some activities do not proceed until other one-time activities (events) complete.
 * Computation does not proceed until resources it needs have been initialized.
 * Ensuring that a service does not start until other services on which it depends have started, and that no other services that depend on it do not start until it is.
 * All parties included in activity are ready to proceed.
@@ -145,3 +145,14 @@ Degenerate case is a binary semaphore (initial count equal to 1). A binary semap
 
 h4. Barriers
 
+For waiting an envet of many threads waiting at the same barrier point at the same time.
+
+Differences from latches:
+* Waiting for a specific event -- other threads
+* Reusable, reinitializes itself when barrier achieved
+
+Implementation, CyclicBarrier. Wait with *await* method, blocks until everybody arrived:
+* When all threads meet at a barrier point, the barrier is passed, threads released, barrier is reset and can be used again
+ ** *await* returns unique index for each thread, can be used to elect a leader that takes some special action in the next iteration
+ ** barrier action may be passed to constructor, a *Runnable* that is executed when the barrier is successfully passed and before the blocked threads are released
+* If a call to *await* method times out or a thread blocked is interrupted, the barrier is considered broken, await calls terminate with *BrokenBarrieriException*.
