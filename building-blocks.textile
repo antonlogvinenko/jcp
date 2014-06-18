@@ -90,7 +90,6 @@ Each consumer has it's own deque. When a consumer exhausts the work in its own d
 Implementations:
 * ArrayDeque, LinkedBlockingDeque
 
-
 h3. Blocking and interruptible methods
 
 Reasons threads block: waiting for IO completion, waiting to acquire lock, waiting to wake up from Thread.sleep, waiting for result of a computation in another Thread.
@@ -112,3 +111,37 @@ Blocking can't be stopped but can be interrupted. Interruption is cooperative
 
 
 h3. Synchronizers
+
+A synchronizer is any object that coordinates the control flow of threads based on its state. They all have properties:
+* encapsulate state that determines whether threads arriving at the synchronizer should be allowed to pass or forced to wait
+* provide methods to manipulate that state
+* provide methods to wait efficitnetly for the synchronizer to enter the desired state
+
+h4. Latches
+
+Delays the progress of threads until it reaches its terminal state. Ensures that some activities do not proceed until other one-time activities complete.
+* Computation does not proceed until resources it needs have been initialized.
+* Ensuring that a service does not start until other services on which it depends have started, and that no other services that depend on it do not start until it is.
+* All parties included in activity are ready to proceed.
+
+Implementation: CountDownLatch.
+
+h4. FutureTask
+
+* A computation represented by a FutureTask is implemented with Callable, it can have one of three state: waiting to run, runnning, completed.
+* *get()* blocks if computation not ready or return the result (safe publication is guaranteed)
+* Throws *ExecutionException* which wraps a *Throwable*, that is: a *checked exception*, a *RuntimeException* or an *Error*.
+
+h4. Semaphores
+
+Controls the number of activities that can access a certain resource or perform the certain action at the same time (resource pools, bounds on collections).
+
+* Manages a set of virtual permits
+* The initial number of permits is passed to the Semaphore constructor.
+* Activities *acquire* permits and *release* when they are done with them.
+* If no permits is available *acquire* blocks until one is.
+
+Degenerate case is a binary semaphore (initial count equal to 1). A binary semaphore can be used as a mutex with non-reentrant semantics.
+
+h4. Barriers
+
