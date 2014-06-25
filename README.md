@@ -9,3 +9,4 @@ This repository is intended for storing results of an undergoing work of organiz
  * [Composing objects](composition.textile)
  * [Building blocks](building-blocks.textile)
 * Structuring concurrent applications
+ * [Task execution](task-execution.textile)
