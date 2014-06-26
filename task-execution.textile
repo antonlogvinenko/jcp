@@ -1,1 +1,40 @@
+h2. Executing Tasks in Threads
 
+Application goals:
+* Low latency
+* Graceful degradation as they become overloaded
+
+Choosing task boundaries:
+* Independence -- facilitates concurrency
+* Small fraction of application's processing capacity
+
+Many server applications offer a natural choice of task boundary
+
+Approaches:
+* Executing sequentially
+ ** Pros: offers simplicity and safety advantage
+ ** Cons: poor latency and thorughput, obviously: IO, computation, serialized requests (one at a time)
+Explicitly creating threads for tasks
+ ** Pos
+  *** Improves latency -- request processing is offloaded from the main loop
+  *** Improves throughput if blocking (IO, locking, resources availability) is presented or if server has multiple cores
+ ** Cons
+  *** Task handling code must be thread safe
+  *** CPU overhead: creating a new thread for each request is time consuming
+  *** Memory consumption: if not enough cpus, thread stay idle
+  *** Limit on the number of available threads
+  *** During prototyping or testing problem of too much threads can stay undetected: put a limit
+
+h2. The Executor Framework
+
+Executor framework
+* Decouples task handling from it's execution: possible to use different execution policies.
+* Implementations add hooks for statistics gathering, application management, monitoring
+
+policies
+thread pools
+lifecycle
+delayed/periodic tasks
+
+
+h2. Finding Exploitable Parallelism
