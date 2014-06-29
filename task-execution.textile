@@ -28,11 +28,28 @@ Explicitly creating threads for tasks
 h2. The Executor Framework
 
 Executor framework
-* Decouples task handling from it's execution: possible to use different execution policies.
+* Decouples task handling from it's execution: possible to use different execution policies
 * Implementations add hooks for statistics gathering, application management, monitoring
 
-policies
-thread pools
+h3. Execution policiy
+
+Execution policiy defines
+* In what thread it will be executed
+* In what order to exeute tasks
+* How many tasks will execute concurrently
+* How many tasks can be queued pending execution
+* If a task should be rejected because the system is overloaded: who is the victim and how application should be notified
+* Actions to be taken before and after execution of a task
+
+Execution policy is a resource management tool, depends on
+* computing resources
+* quality of service requirements
+* ensuring application does not fail of suffer performance problems due to resource exhaustion
+
+h3. Thread pools
+
+
+
 lifecycle
 delayed/periodic tasks
 
