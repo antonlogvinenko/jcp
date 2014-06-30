@@ -46,12 +46,42 @@ Execution policy is a resource management tool, depends on
 * quality of service requirements
 * ensuring application does not fail of suffer performance problems due to resource exhaustion
 
-h3. Thread pools
+h3. Thread pool
 
+Pool is tightly bound to working queue
+* request task from queue
+* execute task
+* return to pool
 
+Thread pool advantages
+* Reusing threads reduces thread creation and teardown costs
+* Reduces requests processing latency
+* Protecting against threads competing for resources
 
-lifecycle
-delayed/periodic tasks
+Executors static methods
+* newFixedThreadPool -- creates tasks as they are submitted, up to maximum pool size, attempts to keep pool size constant
+* newCachedThreadPool -- reaps idle threads when current size of pool exceeds demand for processing, adds new threads when demand increases
+* newSingletonThreadExecutor -- single thread, tasks processed sequentially, as defined by task queue (FIFO, LIFO, priority order)
+* newScheduledThreadPool -- fixed size widh delayed or periodic tasks
+
+h3. Lifecycle
+
+JVM can't exit until all non-daemon threads exit. Framework needs shutdown policy.
+
+*ExecutorService* extending *Executor* adds lifecycle management capabiities. It has 3 states:
+* Running -- initial state
+* Shutting down
+* Terminated
+
+Ways to shutdown
+* *shutdown* method issues a graceful shutdown: no new tasks accepted, previously submitted tasks are allowed to complete
+* *shutdonNow* method issues an abrupt shutdown: attemtps to cancel outstanding tasks and does not start queued tasks
+
+When terminating
+* new submitted tasks are handled by the rejected execution handler -- might discard task or make *execute* throw *RejectedExecutionException*
+* once all tasks are complete, service transitions to the terminated state -- use *awaitTermination* or *isTerminated* to be notified when
+
+h3. Delayed and periodic tasks
 
 
 h2. Finding Exploitable Parallelism
