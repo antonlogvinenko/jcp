@@ -97,3 +97,21 @@ Timer can execute deferred and periodic tasks, but has drawbacks:
 * manages a collection of *Delayed* objects,
 * *Delayed* has a delay time associated with it
 * *DelayQueue* lets you take only expired objects
+
+h3. *Callable*, *Runnable*, *Future*
+*Runnable*, *Callable*, differences:
+* returning value
+* throwing an exception
+
+*Future* allows:
+* cancel the task
+* *get* the result, behavior depends on the state:
+ ** if the task has successfully completed it returns immediately
+ ** if the task failed it rethrows exception wrapped in ExecutionException
+ ** if the task was cancelled it throws CancellationException
+ ** if the task is executing it blocks
+
+h3. CompletionService
+*ExecutorCompletionService*
+* submit *Callable* tasks
+* *poll* or *take* to retrieve completed results packaged as Futures
