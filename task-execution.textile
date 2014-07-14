@@ -97,5 +97,3 @@ Timer can execute deferred and periodic tasks, but has drawbacks:
 * manages a collection of *Delayed* objects,
 * *Delayed* has a delay time associated with it
 * *DelayQueue* lets you take only expired objects
-
-h2. Finding Exploitable Parallelism
