@@ -15,7 +15,7 @@ Approaches:
  ** Pros: offers simplicity and safety advantage
  ** Cons: poor latency and thorughput, obviously: IO, computation, serialized requests (one at a time)
 Explicitly creating threads for tasks
- ** Pos
+ ** Pros
   *** Improves latency -- request processing is offloaded from the main loop
   *** Improves throughput if blocking (IO, locking, resources availability) is presented or if server has multiple cores
  ** Cons
@@ -82,6 +82,19 @@ When terminating
 * once all tasks are complete, service transitions to the terminated state -- use *awaitTermination* or *isTerminated* to be notified when
 
 h3. Delayed and periodic tasks
+Timer can execute deferred and periodic tasks, but has drawbacks:
+* it's single threaded, when one task takes too long, another will:
+ ** fixed delay -- skip some runs
+ ** fixed rate -- runs several time in consequence
+* if a task throws unchecked exception then
+ ** Timer thread does not catch it, this terminates thread
+ ** Timer does not resurrect the thread, assumes it's cancelled, scheduled tasks stop running, new tasks can't be scheduled
 
+*ScheduledThreadPoolExecutor* solves addresses problems.
+
+*DelayQueue*, a *BlockingQueue* implementation, provides scheduling functionality of ScheduledThreadPoolExecutor
+* manages a collection of *Delayed* objects,
+* *Delayed* has a delay time associated with it
+* *DelayQueue* lets you take only expired objects
 
 h2. Finding Exploitable Parallelism
