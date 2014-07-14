@@ -82,6 +82,7 @@ When terminating
 * once all tasks are complete, service transitions to the terminated state -- use *awaitTermination* or *isTerminated* to be notified when
 
 h3. Delayed and periodic tasks
+
 Timer can execute deferred and periodic tasks, but has drawbacks:
 * it's single threaded, when one task takes too long, another will:
  ** fixed delay -- skip some runs
