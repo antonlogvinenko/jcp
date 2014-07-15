@@ -10,3 +10,4 @@ This repository is intended for storing results of an undergoing work of organiz
  * [Building blocks](building-blocks.textile)
 * Structuring concurrent applications
  * [Task execution](task-execution.textile)
+ * [Cancellation and shutdown](cancellation-and-shutdown.textile)
