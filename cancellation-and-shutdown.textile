@@ -1,1 +1,19 @@
+h2. Task cancelation
 
+Why:
+* user-requested cancelation
+* time-limited
+* application events
+* errors
+* shutdown
+
+No way to *preemptively* stop a thread => no way to *preemptively* stop a task. There are only *cooperative* mechanisms: the task and the code requesting cancellation follow an agreed-upon protocol. One such cooperative mechanism is setting a "cancellation requested" flag.
+
+A task that wants to be cancellable must have a *cancellation policy*:
+* how other code can request cancellation
+* when the task checks wether cancellation has been requested
+* what actions the task takes in response to a cancellation request
+
+h3.Interruption
+
+funny
