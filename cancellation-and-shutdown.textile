@@ -9,11 +9,67 @@ Why:
 
 No way to *preemptively* stop a thread => no way to *preemptively* stop a task. There are only *cooperative* mechanisms: the task and the code requesting cancellation follow an agreed-upon protocol. One such cooperative mechanism is setting a "cancellation requested" flag.
 
+h3. Interruption
+
+Mechanism
+* each thread has a boolean interrupred flag
+* interrupting a thread sets this flag to true
+* *Thread* contains methods for interrupted
+* *Thread* contains methods for querying the interrupted status of a thread: *isInterrupted* and *interrupted* (clears the status)
+
+Blocking library methods like *Thread.sleep* and *Object.wait*:
+* try to detect when a thread has been interrupted
+* try to return early
+* clear interrupted status
+* throw InterruptedException
+
+h3. Preserving the cancellation status
+
+2 ways to know about interruption:
+* *interrupted* flag
+* *InterruptedException*
+
+Whatever way you get notified, you must propagate interruption higher up the stack because:
+* cancellation policy
+* thread interruption policy
+
+h3. Interruption policy and cancellation policy
+
 A task that wants to be cancellable must have a *cancellation policy*:
 * how other code can request cancellation
 * when the task checks wether cancellation has been requested
 * what actions the task takes in response to a cancellation request
 
-h3.Interruption
+Interruption policy consists of
+* what it does (if anything) when one is noticed
+* what units of work are considered atomic with respect to interruption
+* how quickly it reacts to interruption
 
-funny
+Most sensible interruption policy
+* exit as quickly as possible
+* clean up if necessary
+* possibly notify some owning entity that the thread is exiting
+
+Threads with nonstandard interruption policies may need to be restricted to tasks written with awareness of this policy
+
+Tasks that do not own the thread should be careful to preserve the interrupted status so that the owning code can eventually act on it. Must distinguish between
+* cancel the current task
+* shut down the worker thread
+
+A task should not assume anything about the interruption policy of its executing thread (unless it is designed to run within a service with specific interruption policy). Task should care to preserve the executing thread's interruption status:
+* throw InterruptedException
+* restore interrupt flag
+
+A thread should be interrupted only by its owner, should make no assumptions about task cancellation policy.
+
+h3. Cancellation via *Future*
+
+*ExecutorService.submit* returns a *Future* that has a *cancel* method that takes a boolean argument *mayInterruptIfRunning*. When it is *True* and the task is running in some thread then the thread is interrupted. Task execution threads created by the standard Executor implementation implement an interruption policy that lets tasks be cancelled via interruption.
+
+h3. Dealing with non-interruptible blocking
+
+Not all blocking methods are responsible to interruptions:
+* Synchronous socket IO in *java.io*. *read* and *write* methods in *InputStream* and *OutputStream* are not responsive to interruption, but closing the socket makes all threads executing these methods throw a *SocketException*.
+* Synchronous IO in *java.nio*. Interrupting a thread waiting on an *InterruptibleChannel* causes it to throw *ClosedByInterruptException*, closes the channel and causes other threads blocked on this channel to throw *ClosedByInterruptExcetpion*.
+* Asynchronous IO with selector. If a thread blocked in *Select.select* (in *java.nio* channels) wakeup causes it to return prematurely by throwing a *ClosedSelectorException*.
+* *Lock* acquisition. Not possible to interrupt thread waiting for an intrinsic lock but to wait it to acquier the lock and make some progress to notice the interrupt. *Lock* class offers the *lockInterruptibly* method for this reason.
