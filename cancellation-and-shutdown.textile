@@ -73,3 +73,6 @@ Not all blocking methods are responsible to interruptions:
 * Synchronous IO in *java.nio*. Interrupting a thread waiting on an *InterruptibleChannel* causes it to throw *ClosedByInterruptException*, closes the channel and causes other threads blocked on this channel to throw *ClosedByInterruptExcetpion*.
 * Asynchronous IO with selector. If a thread blocked in *Select.select* (in *java.nio* channels) wakeup causes it to return prematurely by throwing a *ClosedSelectorException*.
 * *Lock* acquisition. Not possible to interrupt thread waiting for an intrinsic lock but to wait it to acquier the lock and make some progress to notice the interrupt. *Lock* class offers the *lockInterruptibly* method for this reason.
+
+h2. Stopping a Thread-based Service
+
