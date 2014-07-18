@@ -9,7 +9,7 @@ Why:
 
 No way to *preemptively* stop a thread => no way to *preemptively* stop a task. There are only *cooperative* mechanisms: the task and the code requesting cancellation follow an agreed-upon protocol. One such cooperative mechanism is setting a "cancellation requested" flag.
 
-h3. Interruption
+h4. Interruption
 
 Mechanism
 * each thread has a boolean interrupred flag
@@ -23,7 +23,7 @@ Blocking library methods like *Thread.sleep* and *Object.wait*:
 * clear interrupted status
 * throw InterruptedException
 
-h3. Preserving the cancellation status
+h4. Preserving the cancellation status
 
 2 ways to know about interruption:
 * *interrupted* flag
@@ -33,7 +33,7 @@ Whatever way you get notified, you must propagate interruption higher up the sta
 * cancellation policy
 * thread interruption policy
 
-h3. Interruption policy and cancellation policy
+h4. Interruption policy and cancellation policy
 
 A task that wants to be cancellable must have a *cancellation policy*:
 * how other code can request cancellation
@@ -62,11 +62,11 @@ A task should not assume anything about the interruption policy of its executing
 
 A thread should be interrupted only by its owner, should make no assumptions about task cancellation policy.
 
-h3. Cancellation via *Future*
+h4. Cancellation via *Future*
 
 *ExecutorService.submit* returns a *Future* that has a *cancel* method that takes a boolean argument *mayInterruptIfRunning*. When it is *True* and the task is running in some thread then the thread is interrupted. Task execution threads created by the standard Executor implementation implement an interruption policy that lets tasks be cancelled via interruption.
 
-h3. Dealing with non-interruptible blocking
+h4. Dealing with non-interruptible blocking
 
 Not all blocking methods are responsible to interruptions:
 * Synchronous socket IO in *java.io*. *read* and *write* methods in *InputStream* and *OutputStream* are not responsive to interruption, but closing the socket makes all threads executing these methods throw a *SocketException*.
@@ -76,12 +76,12 @@ Not all blocking methods are responsible to interruptions:
 
 h2. Stopping a Thread-based Service
 
-h3. ExecutorService shutdown
+h4. ExecutorService shutdown
 
 * *shutdown* method, safe
 * *shutdownNow* method, responsive, returns all tasks from queue not yet started
 
-h3. Poison Pills
+h4. Poison Pills
 
 With a FIFO queues posion pills mean
 * producers don't send any data after poison pill
@@ -91,5 +91,5 @@ Work only when number of consumers and producers is known
 * Can be extended to *n* producers: consumer must receive pills from all producers
 * Can be extended to *n* consumers: producer must send pills for all consumers
 
-h3. Limitations of ShutdownNow
+h4. Limitations of ShutdownNow
 
