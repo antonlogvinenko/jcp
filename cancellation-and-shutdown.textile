@@ -76,3 +76,20 @@ Not all blocking methods are responsible to interruptions:
 
 h2. Stopping a Thread-based Service
 
+h3. ExecutorService shutdown
+
+* *shutdown* method, safe
+* *shutdownNow* method, responsive, returns all tasks from queue not yet started
+
+h3. Poison Pills
+
+With a FIFO queues posion pills mean
+* producers don't send any data after poison pill
+* consumers finish all the work prior the pill
+
+Work only when number of consumers and producers is known
+* Can be extended to *n* producers: consumer must receive pills from all producers
+* Can be extended to *n* consumers: producer must send pills for all consumers
+
+h3. Limitations of ShutdownNow
+
