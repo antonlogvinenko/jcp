@@ -91,5 +91,10 @@ Work only when number of consumers and producers is known
 * Can be extended to *n* producers: consumer must receive pills from all producers
 * Can be extended to *n* consumers: producer must send pills for all consumers
 
-h4. Limitations of ShutdownNow
+h4. Limitations of *shutdownNow*
+
+*shutdownNow* terminates running tasks and returns list of submitted but not yet started tasks. There is no way to find out what tasks were terminated in progress.
+Probably *shutdownNow* does not return tasks interrupted in progress because that would produce "false positives": tasks that actually completed but were terminated before quiting. Considering these tasks terminated would be ok if they were idempotent.
+
+h2. Handling abnormal termination
 
