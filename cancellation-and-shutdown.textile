@@ -96,5 +96,77 @@ h4. Limitations of *shutdownNow*
 *shutdownNow* terminates running tasks and returns list of submitted but not yet started tasks. There is no way to find out what tasks were terminated in progress.
 Probably *shutdownNow* does not return tasks interrupted in progress because that would produce "false positives": tasks that actually completed but were terminated before quiting. Considering these tasks terminated would be ok if they were idempotent.
 
-h2. Handling abnormal termination
+h2. Handling abnormal thread termination
+
+h4. Approach 1
+
+In task processing threads, catch *RuntimeException*s or add *final* block to take corrective actions
+
+h4. Approach 2
+
+Using *UncaughtExceptionHandler*
+* Set with *Thread.setUncaughtExceptionHandler* or with *Thread.setDefaultUncaughtExceptionHandler*
+* Order of finding a handler: per-thread handler, thread-group handler, it's parents' group handler, ... , top-level thread group that delegates to the default system handler (if one exists) or otherwise prints stacktrace to console.
+* Log the message, or try to restart thread or shutdown an application or any other appropriate action
+
+For pool threads:
+* Provide a *ThreadFactory* to the *ThreadPoolExecutor* constructor.
+* Standard thread pools allow an uncaught task exception to terminate the pool thread, use a try-finally block to replace the thread. That makes an illusion of tasks failing silently.
+
+When exceptions are propagated
+* only when tasks are submitted with *execute*
+* for *submit* exceptions are part if return status
+
+h2. JVM shutdown
+
+Shutdown
+
+* in orderly manner: last non-daemon thread terminates, someone calls *System.exit*, other platform specifif means (*SIGING*)
+* in abrupt manner: calling *Runtime.halt*, killing JVM process by the operating system
+
+h4. Shutdown hooks
+
+Hooks are registered with *Runtime.addShutdownHook*
+
+In an orderly shutdown
+* JVM makes no guarantees on the order in which shutdown hooks are started
+* any application thread (daemon or nondaemon) will run concurrently
+* when shutdown hooks are completed JVM may choose to run finalizers if *runFinalizersOnExit* is true and then halts
+* all threads are abrupty terminated when the JVM halts
+* if the shutdown hooks or finalizers don't complete then orderly shutdown process "hangs" and JVM must be shut down abruptly
+
+In an abrupt shutdown JVM is not required to do anything but to halt the JVM.
+
+It could be a single hook
+* to ensure they are executed in the right order
+* to ensure thread safety and liveness
+* to ensure they are execued in the right order
+
+Shutdown hooks design pricinples
+* should be thread safe
+* should avoid deadlocks
+* should make no assumptions about the state of application
+* should make no assumptions about why JVM is shutting down
+* should exit as fast as possible
+* should not rely on services that can be shut down by the application or other hooks.
+
+Hooks should be used for service or application cleanup.
+
+
+h4. Daemon threads
+
+When JVM starts it creates daemon threads (gc, housekeeping) and normal thread *main*.
+When a new thread is created in inherits the daemon status of the thread that created it.
+
+When a thread exits the JVM performs an inventory of running threads and if the only threads running that are left are daemon threds it initiates and orderly shutdown.
+
+h4. Finalizers
+
+For reclaiming (such as file or socket handlers) must be explicitly returned to operating system. GC treats objects with nontrivial *finalize* methods specially, after they are reclaimed by the collector, *finalize* is called.
+* must be thread safe
+* no guarantee when and if they run
+* impose a significant performance cost on objects with nontrivial finalizers
+* extremely difficult to write correctly
+* in most cases combination of *fainally* block with *close* invokation does a better job
+* sole exception is when you need to manage objects that hold resources acquired by native methods
 
