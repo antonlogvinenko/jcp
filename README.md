@@ -11,3 +11,4 @@ This repository is intended for storing results of an undergoing work of organiz
 * Structuring concurrent applications
  * [Task execution](task-execution.textile)
  * [Cancellation and shutdown](cancellation-and-shutdown.textile)
+ * [Applying thread pools](applying-thread-pools.textile)
