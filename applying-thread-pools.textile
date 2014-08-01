@@ -27,3 +27,16 @@ h4. Long running tasks
 Even if deadlock is not a possibility thread pool can be clogged with long-running tasks, increasing service time for short tasks. The responsiveness may suffer.
 * use timed versions of methods
 * tune the size of the pool
+
+h2. Sizing thread pools
+
+Common rules:
+* Sizes should be provided by a configuration mechanism or computed dynamically by consulting *Runtime.availableProcessors*.
+* If a thread pool size is too big, threads compete for scarce CPU and memory resources.
+* If a thread pool size is too small, throughput suffers as processors go unused despite available work.
+* Understand your computing environment (how many processors? memory?)
+* Understand the nature of your tasks (mostly computation, IO, or both?), do they need a scarce resource (JDBC connection)? Different categories of tasks with differents behaviours consider using multiple threads where each can be configured accordingly to its workload.
+
+How to compute thread pool size:
+* For compute-intensive tasks, an Ncpu processor achieves optimum utilization with a thread pool of *Nthreads = Ncpu+1* threads (even compute-intensive threads ocasionally take a page fault or pause for some other reason, and extra runnable thread prevents CPU cycles from going unused)
+* For IO intensive or any other blocking tasks: *Nthreads = Ncpu * Ucpu / C*, where *C in [0, 1]* is the ratio of computing time, *Ucpu* is the desired load.
