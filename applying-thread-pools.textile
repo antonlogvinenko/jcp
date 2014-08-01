@@ -39,4 +39,4 @@ Common rules:
 
 How to compute thread pool size:
 * For compute-intensive tasks, an Ncpu processor achieves optimum utilization with a thread pool of *Nthreads = Ncpu+1* threads (even compute-intensive threads ocasionally take a page fault or pause for some other reason, and extra runnable thread prevents CPU cycles from going unused)
-* For IO intensive or any other blocking tasks: *Nthreads = Ncpu * Ucpu / C*, where *C in [0, 1]* is the ratio of computing time, *Ucpu* is the desired load.
+* For IO intensive or any other blocking tasks: *Nthreads = Ncpu * Ucpu / C*, where *C in [0; 1]* is the ratio of computing time, *Ucpu in [0; 1]* is the desired load.
