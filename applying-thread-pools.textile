@@ -2,7 +2,7 @@ h2. Implicit couplings between tasks and execution policies
 
 Executor framework decouples task submission from task execution. But there are many tasks that require specific execution policies:
 * *Dependent tasks* create constraints on the execution policy that must be carefully managed to avoid liveness problems.
-* *Tasks that exploit thred confinement and work in single-threaded executors*. Single-threaded pools make stronger promises about concurency. They guarantee tasks are not executed concurrently, which allows to relax thread safety. Objects can be confined to the thread and accessed without syncrhonization. This forms an implicit coupling between the task and execution policy.
+* *Tasks that exploit thread confinement and work in single-threaded executors*. Single-threaded pools make stronger promises about concurency. They guarantee tasks are not executed concurrently, which allows to relax thread safety. Objects can be confined to the thread and accessed without syncrhonization. This forms an implicit coupling between the task and execution policy.
 * *Response-time-sensitive tasks*. GUI applications are sensitive to response time. Implicit coupling is the restriction not to submit long running tasks or many tasks to executor.
 * *Tasks using ThreadLocal*--threads can be reused between tasks. Hence *ThreadLocal* can be used in thread pools only when lifetime of an object is restricted to a single task. Should not be used in pool threads to communicate between threads.
 
@@ -11,7 +11,7 @@ Thread pools work best when tasks are homogeneous and independent
 * submitting tasks that depend on each other risks deadlock
 
 Some tasks require or preclude a specific execution policy
-* tasks that depend on other tasks require that the thred pool be large enough that tasks are never queued or rejected
+* tasks that depend on other tasks require that the thread pool be large enough that tasks are never queued or rejected
 * tasks that exploit thread confinement require serial execution
 
 h4. Thread starfvation deadlock
@@ -31,7 +31,7 @@ Even if deadlock is not a possibility thread pool can be clogged with long-runni
 h2. Sizing thread pools
 
 Common rules:
-* Sizes should be provided by a configuration mechanism or computed dynamically by consulting *Runtime.availableProcessors*.
+* Sizes should be provided by a configuration mechanism or computed dynamically by consulting *Runtime.getRuntime().availableProcessors*.
 * If a thread pool size is too big, threads compete for scarce CPU and memory resources.
 * If a thread pool size is too small, throughput suffers as processors go unused despite available work.
 * Understand your computing environment (how many processors? memory?)
