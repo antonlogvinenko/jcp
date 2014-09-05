@@ -44,6 +44,7 @@ How to compute thread pool size:
 * Other resources can contribute to sizing constraints are memory, file handles, socket handles, database connections. Calculate how much each task requires, divide total amount available by that number. This will an upper bound on the pool size.
 
 h2. Configuring *ThreadPoolExecutor*
+
 *ThreadPoolExecutor* provides the base imlementation for the executors returned by the *newCachedThreadPool*, *newFixedThreadPool*, *newScheduled* *ThreadExecutor* factories in *Executors*.
 If the defaul execution policy does not meet your needs, you can instantiate a *ThreadPoolExecutor* through its constructor and customize it as you see fit.
 
