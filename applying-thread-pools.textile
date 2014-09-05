@@ -65,6 +65,23 @@ Implementations:
 
 h4. Managing queued tasks
 
+Unbounded thread creation may lead to instability. Bounded thread pools limit the number of tasks that can be executed concurrently. Representin tasks as Runnable objects is cheaper than with a thread. However, this is only a parial solution
+* if tasks keep up coming faster than they can be processed the system can run out of memory
+* response time will get progressively worse as the task queue grows
+
+*ThreadPoolExecutor* allows you to supply a *BlockingQueue* to hold tasks awaiting execution. There are three basic approaches to task queueing:
+* unbounded queue, tasks will queue up if all workers are busy, but the queue could grow without bound if the tasks keep arriving faster then they are executed. Unbounded *LinkedBlockingQueue* is the default for *newFixedThreadPool* and *newSingleThreadExecutor*
+* bounded queue, tasks queue up until the queue is full, raising a question of what to do with new tasks when the queue is full. ArrayBlockingQueue, *LinkedBlockingQueue*, *PriorityBlockingQueue*.
+* synchronous handout are acceptable if the thread pool is very large or unbounded, or if rejecting tasks is acceptabke. Tasks are handed off to threads waiting on a queue, new threads are created if current thread pool is less than the maximum, otherwise tasks are rejected according to the saturation policy. The *newCachedThreadPool* factory uses this approach.
+
+Also, bounded thread pools or queues are good only when tasks are independent. They are not suitable when tasks depend on each other, because bounded implementations can cause starvation deadlock. Use
+* *cachedThreadPool* where both the queue and the pool are unbounded
+* or use bounded thread pool, a *SynchronousQueue* as the work queue and the *caller-runs* saturaiion policy.
+
+Consideration
+* fixed thread pool is a good choice when you need to limit the number of concurrent tasks for resource-management purposes (server application handling requests)
+* the *newCachedThreadPool* factory provides better queueing performance than a fixed thread pool (non-blocking algorithm for *SyncrhonousQueue*)
+
 h4. Saturation policies
 
 h4. Thread factories
