@@ -44,4 +44,32 @@ How to compute thread pool size:
 * Other resources can contribute to sizing constraints are memory, file handles, socket handles, database connections. Calculate how much each task requires, divide total amount available by that number. This will an upper bound on the pool size.
 
 h2. Configuring *ThreadPoolExecutor*
+*ThreadPoolExecutor* provides the base imlementation for the executors returned by the *newCachedThreadPool*, *newFixedThreadPool*, *newScheduled* *ThreadExecutor* factories in *Executors*.
+If the defaul execution policy does not meet your needs, you can instantiate a *ThreadPoolExecutor* through its constructor and customize it as you see fit.
 
+h4. Thread creation and teardown
+
+Parameters:
+* core pool size -- the target size, the implementation attempts to maintain the pool at this size even when there are no tasks to execute and will not create more threads than this unless the work queue is full
+* maximum pool size -- the upper bound on how many pool threads can be active at once
+* keep-alive time -- a thread that has been idle for longer than keep-alive time becomes a candidate for reaping and can be terminated if the current pool size exceeds the core size
+
+Notes:
+* When a *ThreadPoolExecutor* is initially created, the core threads are not started immediately, but instead as tasks are submitted, unless you call *prestartAllCoreThreads*.
+* Developers can be tempted to set the core size to zero so that the worker threads will eventually be torn down and therefore won't prevent the JVM from exiting. This can cause strange-seeming behavior in thread pools that don't use a *SynchronousQueue* for their work queue (as *newCachedThreadPool* does). If the pool is already at its core size *ThreadPoolExecutor* creates a new thread only if the work queue is full. So tasks submitted to a thread pool of zero core size will not execute until the queue fills up, which may not be what is desired. Use *allowCoreThreadTimeOut* with core size set to zero if you want a bounded thread pool and have all the threads torn down when there is no work to do.
+
+Implementations:
+* the *newFixedThreadPool* factory sets both the core pool size and the maximum pool size to the requested poo size, creating the effect of infinite timeout
+* the *newCachedPool* factory sets the maximum pool size to Integer.MAX_VALUE and the core pool size to zero with a timeout of one minute, creating the effect of an infinitely expandable thread pool that will contract again when demand decreases
+
+h4. Managing queued tasks
+
+h4. Saturation policies
+
+h4. Thread factories
+
+h4. Customizing ThreadPoolExecutor after construction
+
+h2. Extending ThreadPoolExecutor
+
+h2. Parallelizing Recursive Algorithms
