@@ -78,7 +78,7 @@ Also, bounded thread pools or queues are good only when tasks are independent. T
 * *cachedThreadPool* where both the queue and the pool are unbounded
 * or use bounded thread pool, a *SynchronousQueue* as the work queue and the *caller-runs* saturaiion policy.
 
-Consideration
+Some considerations
 * fixed thread pool is a good choice when you need to limit the number of concurrent tasks for resource-management purposes (server application handling requests)
 * the *newCachedThreadPool* factory provides better queueing performance than a fixed thread pool (non-blocking algorithm for *SyncrhonousQueue*)
 
