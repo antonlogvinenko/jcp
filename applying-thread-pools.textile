@@ -84,6 +84,20 @@ Some considerations
 
 h4. Saturation policies
 
+Saturation policy comes into play when:
+* the work queue fills up
+* a task is submitted to a shutdown *Executor*
+
+Saturation policy of *ThreadPoolExecutor* can be modified with *setRejectedExecutionHandler*.
+
+Policies:
+* the *abort* (default) policy causes execute to throw the unchecked *RejectedExecutionException*
+* the *discard* policy silently discards the newly submitted task if it cannot be queued for execution
+* the *discard-oldest* policy discards the task that would otherwise be executed next and tries to resubmit the new task. (for priority queues discards a task with the highest priority, not a good choice)
+* the *caller-runs* policy neither discards nor throws an exception, but instead tries to slow down the flow of the new tasks by pushing some of the work back to the caller. It executes the newly submitted task not in a thread pool but in the thread that calls *execute*. The main thread would also not be accepting during this time, so incoming requests would queue up in the TCP layer instead of in the application. The TCP layer will start discarding connection requests as well. As the server becomes overloaded, the overload is gradually pushed outward -- from the pool threads to the work queue to the application to the TCP layer and eventually to the client -- enabling more graceful degradation under load.
+* no saturation policy to block *execute* when the work queue is full. The same effect may be accomplished by using a semaphore to bound the task injection rate: use an unbounded queue, set the bound on the semaphore to be equal to the thread pool size plus the number of queued tasks you want to allow.
+
+
 h4. Thread factories
 
 h4. Customizing ThreadPoolExecutor after construction
