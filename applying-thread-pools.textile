@@ -118,4 +118,4 @@ h2. Extending ThreadPoolExecutor
 
 h2. Parallelizing Recursive Algorithms
 
-Sequential loop iterations are suitable for parallelization when *each iteration is independent of the others* and *the work done in each iteration of the loop body is significant enough* to offset the cost of managing a new task. It is possible then to shutdown the executor and *awaitTermination* to wait for tasks completion.
+Sequential loop iterations are suitable for parallelization when *each iteration is independent of the others* and *the work done in each iteration of the loop body is significant enough* to offset the cost of managing a new task. It is possible then to shutdown the executor and *awaitTermination* to wait for tasks completion. (Graph in-depth traversion is an example).
