@@ -97,10 +97,18 @@ Policies:
 * the *caller-runs* policy neither discards nor throws an exception, but instead tries to slow down the flow of the new tasks by pushing some of the work back to the caller. It executes the newly submitted task not in a thread pool but in the thread that calls *execute*. The main thread would also not be accepting during this time, so incoming requests would queue up in the TCP layer instead of in the application. The TCP layer will start discarding connection requests as well. As the server becomes overloaded, the overload is gradually pushed outward -- from the pool threads to the work queue to the application to the TCP layer and eventually to the client -- enabling more graceful degradation under load.
 * no saturation policy to block *execute* when the work queue is full. The same effect may be accomplished by using a semaphore to bound the task injection rate: use an unbounded queue, set the bound on the semaphore to be equal to the thread pool size plus the number of queued tasks you want to allow.
 
-
 h4. Thread factories
 
+*ThreadPool* has a single method *createPool* that is called when the pool wants to create a new thread.
+Some reasons to define thread factory:
+* specify UncaughtExceptionHandler
+* instantiate an instance of custom *Thread* class
+
 h4. Customizing ThreadPoolExecutor after construction
+
+Most of the options passed to the *ThreadPoolExecutor* constructor can be modified via setters. If executor was created with one of factory methods in *Executors* then you can cast the result to *ThreadPoolExecutor* to access these setters.
+
+*Executors* includes a factory method *unconfigurableExecutorService*, it wraps one with only the methods of *ExecutorService* so it cannot be further configured. *newSingleThreadPool* executor returns an *ExecutorService* wrapped in this manner rather than a raw *ThreadPoolExecutor* (it promises not to execute threads concurrently; if some misguided code was to increase the pool size on a single-treaded executor, it would undermine the indended execution semantics).
 
 h2. Extending ThreadPoolExecutor
 
