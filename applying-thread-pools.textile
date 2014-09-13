@@ -112,4 +112,8 @@ Most of the options passed to the *ThreadPoolExecutor* constructor can be modifi
 
 h2. Extending ThreadPoolExecutor
 
+*ThreadPoolExecutor* is designed for extension, it provides several hooks for subclasses to override:
+* *beforeExecute*, *afterExecute* -- called in the thread that executes the task, can be used for adding logging, timing, monitoring, statistics gathering; afterExecute executes if the task completes normally or throws *Exception* (if it throws Error then the *afterExecute* is not invoked). If *beforeExecute* throws an *RuntimeException*, the task and *afterExecute* are not executed at all.
+* *terminated* hook is called when the thread pool completes the shutdown process, after all tasks have finished and all worker threads have shut down. Can be used to release resources allocated by *Executor* during lifetime, perform notification, logging, statistics gathering.
+
 h2. Parallelizing Recursive Algorithms
