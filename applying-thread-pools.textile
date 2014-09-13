@@ -101,7 +101,7 @@ h4. Thread factories
 
 *ThreadPool* has a single method *createPool* that is called when the pool wants to create a new thread.
 Some reasons to define thread factory:
-* specify UncaughtExceptionHandler
+* specify *UncaughtExceptionHandler*
 * instantiate an instance of custom *Thread* class
 
 h4. Customizing ThreadPoolExecutor after construction
