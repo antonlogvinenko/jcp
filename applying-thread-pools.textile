@@ -117,3 +117,5 @@ h2. Extending ThreadPoolExecutor
 * *terminated* hook is called when the thread pool completes the shutdown process, after all tasks have finished and all worker threads have shut down. Can be used to release resources allocated by *Executor* during lifetime, perform notification, logging, statistics gathering.
 
 h2. Parallelizing Recursive Algorithms
+
+Sequential loop iterations are suitable for parallelization when *each iteration is independent of the others* and *the work done in each iteration of the loop body is significant enough* to offset the cost of managing a new task. It is possible then to shutdown the executor and *awaitTermination* to wait for tasks completion.
