@@ -108,7 +108,7 @@ h4. Customizing ThreadPoolExecutor after construction
 
 Most of the options passed to the *ThreadPoolExecutor* constructor can be modified via setters. If executor was created with one of factory methods in *Executors* then you can cast the result to *ThreadPoolExecutor* to access these setters.
 
-*Executors* includes a factory method *unconfigurableExecutorService*, it wraps one with only the methods of *ExecutorService* so it cannot be further configured. *newSingleThreadPool* executor returns an *ExecutorService* wrapped in this manner rather than a raw *ThreadPoolExecutor* (it promises not to execute threads concurrently; if some misguided code was to increase the pool size on a single-treaded executor, it would undermine the indended execution semantics).
+*Executors* includes a factory method *unconfigurableExecutorService*, it wraps one with only the methods of *ExecutorService* so it cannot be further configured. *newSingleThreadExecutor* returns an *ExecutorService* wrapped in this manner rather than a raw *ThreadPoolExecutor* (it promises not to execute threads concurrently; if some misguided code was to increase the pool size on a single-treaded executor, it would undermine the indended execution semantics).
 
 h2. Extending ThreadPoolExecutor
 
