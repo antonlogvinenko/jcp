@@ -4,6 +4,11 @@ Modern GUI frameworks create a dedicated event dispatch loop (EDT) for handling 
 * Unfortunate interaction between input event processing and any sensible object oriented modeling of GUI components. Actions initiated by the user tend to "bubble up" from the OS to the application. Application-initiated actions "bubble down" from the application to the OS. Combining this tendency for activities to access the same GUI objects in the opposite order with the requirement of making each object thread-safe yields a recipe for inconsistent lock ordering, which leads to deadlock.
 * The prevalence of Model-View-Controller pattern. Facroting user interactions into cooperating model, view and controller objects greatly simplifies implementing GUI applications, but raises the risk of inconsistent lock ordering.
 
+Sequential event processing
+GUI applications are oriened around processing fine-grained events such as mouse clicks.
+* Because there is only a single thread for processing GUI tasks, they are processed sequentially and no tasks overlap. This makes writing tasks easier -- you don't have to worry about interference from other tasks.
+* The downside is that if one task takes too long to execute, other tasks must wait unil it is finished. If those other tasks are responsible for responding to user input or providing visual feedback the UI will appear frozen, even "Cancel" button will become unresponsible. You must run such tasks in another thread. Nevertheless, you will have to send notifications to GUI thread and handle cancelation, so things can get complicated quickly. 
+
 
 h2. Short-running GUI tasks
 
