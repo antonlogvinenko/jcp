@@ -10,6 +10,20 @@ GUI applications are oriened around processing fine-grained events such as mouse
 * Because there is only a single thread for processing GUI tasks, they are processed sequentially and no tasks overlap. This makes writing tasks easier -- you don't have to worry about interference from other tasks.
 * The downside is that if one task takes too long to execute, other tasks must wait unil it is finished. If those other tasks are responsible for responding to user input or providing visual feedback the UI will appear frozen, even "Cancel" button will become unresponsible. You must run such tasks in another thread. Nevertheless, you will have to send notifications to GUI thread and handle cancelation, so things can get complicated quickly. 
 
+h4. Thread confinement in Swing
+
+All Swing components and data model objects are kept consistent not by synchronization but by thread confinement: they are confined to the event thread. Any code that accesses these objects must be run in the event thread.
+* You don't need to worry about synchronization
+* You can't access presentation objects from outside the event thread at all
+
+Few exceptins, of course:
+* *SwingUtilities.isEventDispatchThread* -- determines whether the current thread is the event thread
+* *SwingUtilities.invokeLater* -- schedules a *Runnable* for execution on the event thread
+* *SwingUtilities.invokeAndWait* -- schedules a *Runnable* for execution on the event thread and blocks the current thread until it completes (callable from a non-GUI thread only)
+* methods to enqueue a repaint or revalidation request on the event queue
+* methods for adding or removing listeners
+
+The Swing event thread can be thought of as a single-threaded Executor that processes tasks from the event queue. The worker thread sometimes dies and is replaced by a new one, but this should be transparent to tasks.
 
 h2. Short-running GUI tasks
 
