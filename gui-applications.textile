@@ -1,1 +1,14 @@
+h2. Why are GUIs single-threaded
 
+Modern GUI frameworks create a dedicated event dispatch loop (EDT) for handling GUI events. The reason is that multithreaded GUI frameworks tend to be susceptible to deadlock:
+* Unfortunate interaction between input event processing and any sensible object oriented modeling of GUI components. Actions initiated by the user tend to "bubble up" from the OS to the application. Application-initiated actions "bubble down" from the application to the OS. Combining this tendency for activities to access the same GUI objects in the opposite order with the requirement of making each object thread-safe yields a recipe for inconsistent lock ordering, which leads to deadlock.
+* The prevalence of Model-View-Controller pattern. Facroting user interactions into cooperating model, view and controller objects greatly simplifies implementing GUI applications, but raises the risk of inconsistent lock ordering.
+
+
+h2. Short-running GUI tasks
+
+h2. Long-running GUI tasks
+
+h2. Shared data models
+
+h2. Other forms of single-threaded sussystems
