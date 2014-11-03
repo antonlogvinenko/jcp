@@ -67,6 +67,10 @@ The presentation model can be updated from the shared model
 * By embedding a snapshot of relevant state in the update message. This approach is simple, but works well when the data model is small and is not updated frequently, and the structure of two models is similar.
 * By having the presentation model retreive the data directly from the shared model when it receives an update event. More complex approach, works best when the data is large or updates are frequent, or when any of both sides contains information not visible to the other side. Another advantage is that the finer-grained updates can improve the percieved quality of the display if only a small portion of data has changed.
 
-
-
 h2. Other forms of single-threaded sussystems
+
+Thread confinement is not restricted to GUIs: it can be used wherever a facility is implemented as a single-threaded subsystem.
+
+Sometimes thread confinement is forced on the developer for reasons that have nothing to do with avoding synchronization or deadlock. You can create a dedicated thread or a single-threaded executor and provide a proxy object that intercepts calls to the thread-confined object and submits them as tasks to the dedicated thread.
+
+*Future* and *newSingleThreadExecutor* work together to make this easy. The proxy method can submit the task and immediately call *Future.get* to wait for the result.
