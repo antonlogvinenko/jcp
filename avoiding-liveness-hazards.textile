@@ -28,7 +28,11 @@ Locks used may depend on variables values, same method locking on 2 arguments ma
 ** If hash collisions were common, this technique might become a concurrency bottleneck (== having a single, program-wide lock). Hash collisions with System.identityHashCode are vanishingly infrequent.
 * If objects for synchronization has a unique, comparable key, inducing a lock order is even easier: order objects by their key.
 
-h4. Deadlocks between cooperating objects
+h4. Deadlocks between cooperating objects.
+
+No method may explicitly acquire two locks but deadlock may still be possible. Cooperating objects may invoke each other's synchronized methods in a way that leads to monitor locks taken in a wrong order.
+
+In general, invoking an alien method with a lock held is asking for liveness trouble. The alien method might acquire other locks (risking deadlock) or block for unexpectedly long time, stalling other threads that need the lock you hold.
 
 h4. Open calls
 
