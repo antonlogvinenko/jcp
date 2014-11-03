@@ -1,2 +1,33 @@
+* There is a tension between safety and liveness. Locking is used to ensure safety, but indiscriminate use of locking can cause lock-ordering deadlocks.
+* Thread pools and semaphores are used to bound resource consumption, but failure to understand activities being bounded can cause resource deadlocks.
 
-cake
+Java applications do not recover from deadlocks, so it's worthwhile to ensure that your design precludes the conditions that could cause it.
+
+h2. Deadlock
+
+When thread A holds lock L and tries to ackquire lock M, but at the same time thread B holds M and tries to acquire L, both threads will wait forever. If nodes in a directed graph are threads and endges represent "waiting" relation, then a cyclic graph indicates there is a deadlock.
+
+Database systems are designed to recover from deadlocks. A transaction may acquire many locks until it commits, and two transactions may deadlock. When a database detects deadlock (analysing directed graph), it picks a victim and aborts the transaction. The application can then retry the aborted transaction, which may be able to repeat the transaction.
+
+The JVM is not helpful in resolving deadlocks. When a set of Java threads deadlock, they threads are permanently out of comission. The application may stall completely, a particular subsystem may stall, or performance may suffer.
+
+h4. Lock-ordering deadlocks
+
+*leftRight* method acquires *left* and *right* locks. *rightLeft* methods acquires *right* and *left* locks.
+
+If the *leftRight* methods acquired the *left* lock and then the *rightLeft* acquired *right* lock, they will deadlock.
+
+The deadlock came about because the two threads attempted to acquire the same lock in a different order. A program will be free of lock-ordering deadlocks if all threads acquire the locks in a fixed global order.
+
+h4. Dynamic lock order deadlocks
+
+h4. Deadlocks between cooperating objects
+
+h4. Open calls
+
+h4. Resource deadlocks
+
+
+h2. Avoiding and diagnosing deadlocks
+
+h2. Other liveness hazards
