@@ -13,3 +13,5 @@ This repository is intended for storing results of an undergoing work of organiz
  * [Cancellation and shutdown](cancellation-and-shutdown.textile)
  * [Applying thread pools](applying-thread-pools.textile)
  * [GUI applications](gui-applications.textile)
+* Liveness, performance and testing
+ * [Avoding liveness hazards](avoiding-liveness-hazards.textile) 
