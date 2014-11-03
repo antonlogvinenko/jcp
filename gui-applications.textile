@@ -27,6 +27,8 @@ The Swing event thread can be thought of as a single-threaded Executor that proc
 
 h2. Short-running GUI tasks
 
+In a GUI application, events originate in the event thread and bubble up to application-provided listeners, which will probably perform some computation that affects the presentation object. For simple, short-running tasks, the entire action can stay in the event thread; for longer-running tasks, some of the processing should be offloaded to another thread.
+
 h2. Long-running GUI tasks
 
 h2. Shared data models
