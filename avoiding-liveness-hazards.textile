@@ -36,8 +36,19 @@ In general, invoking an alien method with a lock held is asking for liveness tro
 
 h4. Open calls
 
-h4. Resource deadlocks
+Calling a method with no locks held is called an open call
+* Classes that rely on open calls are more well-behaved and composable
+* The liveness analysis of a program that reles exclusively on open calls is far easier than that of one that does not. Makes it easier to identify the code paths that acquire multiple locks and therefore to ensure that locks are acquired in a constant order
 
+Restructuring a synchronized block to allow open calls can have undesireable consequences, since it takes an operation that was atomic and makes it nonatomic.
+* In many cases, the loss of atomicity is perfectly acceptable
+* In some cases, the loss of atomicity is a problem, and you will have to use another technique to achieve atomicity. One such technique is to restructure the code around open call so that only one thread can execute that code path. For example, hold the lock to mark the service as shutting down, release the lock (other threads waiting because of status set), make an open call, wait for resources release, mark service as shut down, let other threads access it.
+
+h4. Resource deadlocks
+Tasks can deadlock waiting for resources as they can deadlock waiting for locks.
+
+* Thread A could hold a connection to database D1 and wait for a connection to D2, thread B could hold a connection to database D2 and wait for a connection to D1.
+* Thread-starvation deadlock: a task executing in a single threaded executor submits another task to it and waits for its completion.
 
 h2. Avoiding and diagnosing deadlocks
 
