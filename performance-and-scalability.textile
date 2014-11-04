@@ -6,8 +6,8 @@ h2. Thinking about performance
 
 h4. Performance and scalability
 
-Resources: CPU cycles, memory, network bandwidth, IO bandwidth, database requests, disk space, etc.
-When the performance of the activity is limited by availability of a particular resource, we say it is bounded by that resource: CPU-bound, for instance.
+*Resources*: CPU cycles, memory, network bandwidth, IO bandwidth, database requests, disk space, etc.
+When the performance of the activity is limited by availability of a particular resource, we say it is *bounded by that resource*: CPU-bound, for instance. Performance is discussed in the context of the resource.
 
 Using threads always introduces some performance costs compared to the single-threaded approach:
 * overhead associated with coordinating between threads (locking, signaling, memory synchronization)
