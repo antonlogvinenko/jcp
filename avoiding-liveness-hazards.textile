@@ -53,4 +53,66 @@ Tasks can deadlock waiting for resources as they can deadlock waiting for locks.
 
 h2. Avoiding and diagnosing deadlocks
 
+* A program that never acquires more than one lock at a time cannot experience lock-ordering deadlock.
+* If you must acquire multuple locks, lock ordering must be a part of your design
+** Try to minimize the number of potential lock interactions
+** Follow and document a lock ordering protocol for locks that may be acquired together
+* Audit code that uses fine-grained locking
+** Identify where multitple locks could be acquired -- try to make this set small. Perform a global analysis of all such instances to ensure that lock ordering is consistent across entire program
+** Using open calls wherever possible simplifies this analysis
+
+h4. Timed lock attempts
+
+Use timed locks for detecting and recovering from deadlocks.
+* Use *tryLock* method of explicit *Lock* classes instead of intrinsic locking.
+* Use a timeout that is much longer than you expect acquiring the lock will take
+
+When a timed lock attempt failes, there are several possible reasons why:
+* Maybe there was a deadlock
+* Thread entered infinite loop holding that lock
+* Some activity is running a lot slower than you could expect
+
+Using timed lock acquisition to acquire multiple locks can be effective against deadlocks even when timed locking is not used consistently throughout the program. If lock acquisition times out, you can release the locks, back off and wait for a while, possibly clearing the deadlock condition. But this is possible only if two locks are acquired together, not due to the nesting of method calls).
+
+h4. Deadlock analysis with thread dumps
+
+JVM thread dump:
+* stack trace for each running thread
+* which locks are held by each thread, in which stack frame they were acquired
+* which lock a blocked thread is waiting to acquire
+
+JVM searches the is-waiting-for graph for cycles to find deadlocks. If it finds one, it includes deadlock information:
+* which threads and locks are involved
+* where in the program the offending lock acquisitions are
+
+Triggering a thread dump: *SIGQUIT* request (*kill -3*).
+
+If you are using explicit Lock classes instead of intrinsic locking
+* Java 5.0 has no support for associating Lock information with the thread dump, explicit locks do not show up at all in thread dumps
+* Java 6 does include thread dump support and deaclock detection with explicit Locks, but the information on where explicit locks are acquired (associated with the acquiring thread) is less precise than for intrinsic locks (associated with the stack frame where they were acquired).
+
 h2. Other liveness hazards
+
+h4. Starvation
+
+Starvation is when a thread is perpetually denied access to resources it needs in order to make progress. The most commonly starved resource is CPU cycles.
+
+Causes:
+* nonterminating constructs with a lock held, since other threads will never be able to acquire that lock
+* inappropriate use of thread priorities
+** thread priorities are merely a scheduling hint
+** mapped to OS thread priorities as JVM sees fit
+** this mapping is platform specific, due to different number of priorities in different OS.
+** default is *Thread.NORM_PRIORITY*, it's not always obvious what effect bossting it will have: might do nothing or make one thread be scheduled in preference of others, causing starvation
+
+h4. Poor responsiveness
+
+Poor responsiveness (for examples, in GUI applications)
+* Latency critical threads compete for CPU resources with heavy background threads. Altering thread priorities can make sense here.
+* Poor lock management, if a lock is held for a long time (iterating a large collection, for example), other threads that need that lock and collection may have to wait for a long time
+
+h4. Livelock
+
+Livelock -- a thread, while not blocked, still cannot make a progress because it keeps retrying an operation that always fails.
+* Transactional messaging applications, from over-eager error recovery code that mistakenly treats an unrecoverable error as recoverable (processing the same message over and over again, the poison message problem)
+* Multiple cooperating threads changing their state in response to the others in such a way that no thread can ever make progress. Introduce some randomness into the retry mechanism.
