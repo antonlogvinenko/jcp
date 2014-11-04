@@ -50,7 +50,7 @@ Tradeoffs:
 ** compromising good object-oriented design principles, such as breaking encapsulation
 ** risk of error, faster algorithms are more complicated
 
-Always support your reasoning about performance with measurements: the intuition of where the performance problem lies is often incorrect.
+Measure, never guess. Always support your reasoning about performance with measurements: the intuition of where the performance problem lies is often incorrect.
 
 h2. Amdahl's law
 
