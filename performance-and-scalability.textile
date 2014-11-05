@@ -31,18 +31,18 @@ h4. Evaluating performance tradeoffs
 
 Avoid premature optimizations. First make it right, then make it fast -- if it is not already fast enough.
 
-Then use conservative approach in tuning performance
+Then *use conservative approach* in tuning performance
 * What do you mean by faster?
 * Under which conditions will this approach be actually faster? Light or heavy load? Large or small data sets? Support the answer with measurements.
 * How often are these conditions likely to arise in your situation? Support the answer with measurements.
 * Is the code likely to be used in other situations where the conditions may be different?
 * What hidden costs are you trading for this improved performance? Is this a good tradeoff?
 
-Why you should take conservative approach in tuning performance:
+*Why you should take conservative approach* in tuning performance:
 * The quest for performance is probably the single greatest source of concurrency bugs which are amongh the most difficult bugs to track down and eliminate. Trade carefully.
 * Worse, trading something for performance you can get neither.
 
-Tradeoffs:
+*Tradeoffs*:
 * one cost for another (service time versus memory consumtion)
 * trading cost for safety
 * trading cost for readability or maintainability
@@ -50,7 +50,7 @@ Tradeoffs:
 ** compromising good object-oriented design principles, such as breaking encapsulation
 ** risk of error, faster algorithms are more complicated
 
-Measure, never guess. Always support your reasoning about performance with measurements: the intuition of where the performance problem lies is often incorrect.
+*Measure, never guess.* Always support your reasoning about performance with measurements: the intuition of where the performance problem lies is often incorrect.
 
 h2. Amdahl's law
 
