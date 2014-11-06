@@ -61,6 +61,6 @@ where
 * *N* is the amount of processors
 * *(1 - F) / N* is the time that *1 - F* part of calculation takes on *N* processors
 
-*Utilization* is the *speedup* divided by the number of resource *N*.
+*Utilization* is the *speedup* divided by the number of resources *N*.
 * Perfectly, utilization is 1, meaning *N* added reousrces produce speedup=N, and N/N=1
 * If you add N resources and get speedup=P<N then you've actually utilized P/N of added resources, hence term *utilization*
