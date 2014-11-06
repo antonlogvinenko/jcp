@@ -74,3 +74,12 @@ h4. Applying Amdahl's law qualitively
 The law quantifies the possible speedup if we can accurately estimate the fraction of execution that is serialized. Also, this law can be used without such measurement.
 
 When evaluating an algorithm, thinking "in the limit" about what would happen with hundreds or thousands of processors can offer some insight into where scaling might appear.
+
+h2. Costs introduces by threads
+
+h2. Reducing lock contention
+
+h2. Comparing map performance
+
+h2. Reducing context switch overhead
+
