@@ -75,7 +75,7 @@ The law quantifies the possible speedup if we can accurately estimate the fracti
 
 When evaluating an algorithm, thinking "in the limit" about what would happen with hundreds or thousands of processors can offer some insight into where scaling might appear.
 
-h2. Costs introduces by threads
+h2. Costs introduced by threads
 
 h2. Reducing lock contention
 
