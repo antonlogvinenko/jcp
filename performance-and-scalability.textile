@@ -55,7 +55,11 @@ Then *use conservative approach* in tuning performance
 h2. Amdahl's law
 
 *Speedup <= 1 / (F + (1 - F) / N)*
-where *F* in [0; 1] is the fraction of calculation that must be executed serially, *N* is the amount of processors
+where
+* *F* in [0; 1] is the fraction of calculation that must be executed serially
+* *1 - F* is the fraction of calculation that can be executed in parllel
+* *N* is the amount of processors
+* *(1 - F) / N* is the time that *1 - F* part of calculation takes on *N* processors
 
 If *N* is infiity
 * If *F* is 0,5 then the maximum speedup converges to 1/F, meaning that such a program can be sped up by a factor of 2
