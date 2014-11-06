@@ -63,4 +63,8 @@ where
 
 *Utilization* is the *speedup* divided by the number of resources *N*.
 * Perfectly, utilization is 1, meaning *N* added reousrces produce speedup=N, and N/N=1
-* If you add N resources and get speedup=P<N then you've actually utilized P/N of added resources, hence term *utilization*
+* If you add N resources and get speedup=P<N then you've actually utilized P/N of added resources, hence the term *utilization*
+
+The serial fraction of computaion must be identified carefully
+* It can include time to fetch data being processed from queue/dequeue (less for non-blocking lists)
+* It must include some time for result handling. Time to merge the results or to producing a side-effect.
