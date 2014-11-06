@@ -67,4 +67,10 @@ where
 
 The serial fraction of computaion must be identified carefully
 * It can include time to fetch data being processed from queue/dequeue (less for non-blocking lists)
-* It must include some time for result handling. Time to merge the results or to producing a side-effect.
+* It must include some time for result handling. Time to merge the results or for producing a side-effect.
+
+h4. Applying Amdahl's law qualitively
+
+The law quantifies the possible speedup if we can accurately estimate the fraction of execution that is serialized. Also, this law can be used without such measurement.
+
+When evaluating an algorithm, thinking "in the limit" about what would happen with hundreds or thousands of processors can offer some insight into where scaling might appear.
