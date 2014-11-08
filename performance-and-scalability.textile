@@ -162,10 +162,10 @@ For example, implementing the size() method of a collection as a cached value ma
 h4. Third. Alternatives to exclusive locks
 
 Forego the use of exclusive locks in favor of a more concurrency-friendly means of managing shared state:
-* concurrent collections
-* read-write locks, can offer greater concurrency for read-mostly data structures
-* immutable objects, can eliminate the need of locking for read-only objects
-* atomic variables, offer means of reducing the cost of updating "hot fields" by providing very fine-grained (and scalable) atomic operations, and are implemented using low-level concurrency primitives (compare-and-swap) provided by most modern prcoesssors
+* *concurrent collections*
+* *read-write locks*, can offer greater concurrency for read-mostly data structures
+* *immutable objects*, can eliminate the need of locking for read-only objects
+* *atomic variables*, offer means of reducing the cost of updating "hot fields" by providing very fine-grained (and scalable) atomic operations, and are implemented using low-level concurrency primitives (compare-and-swap) provided by most modern prcoesssors
 
 h4. Monitoring CPU utilization
 
