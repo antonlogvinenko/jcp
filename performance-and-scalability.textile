@@ -118,6 +118,27 @@ Suspending a thread entails two additional context switches:
 
 h2. Reducing lock contention
 
+*Lock contention* causes both *serialization* and *context switches*
+* *Serialization* hurts *scalability*
+* *Context switches* hurt hurts *performance*
+
+The corollary of Little's law, a result from queueing theory, says *"the average number of customers in a stable system is equal to their average arrival rate multiplied by their average time in the system".*
+
+Hence 3 ways to reduce lock contention:
+* Reduce the duration for which locks are held
+* Reduce the frequency with which locks are requested
+* Replace exclusive locks with coordination mechanisms that permit greater concurrency
+
+h4. Narrowing lock scope
+
+Hold locks as briefly as possible:
+* move code that does not require the lock out of *synchronized* block
+* especially for expensive operations and potentially blocking operations such as I/O.
+
+h4. Reducing lock granularity
+
+
+
 h2. Comparing map performance
 
 h2. Reducing context switch overhead
