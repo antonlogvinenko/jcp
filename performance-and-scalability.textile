@@ -77,6 +77,45 @@ When evaluating an algorithm, thinking "in the limit" about what would happen wi
 
 h2. Costs introduced by threads
 
+For threads to offer a performance improvement, the performance benefits of parallelization must outweight the costs introduced by concurrency.
+
+h4. Context switching
+
+If there are more than one runnable threads than CPUs, eventually the OS will preempt one thread to start another. This causes a context switch, which requires
+* saving the execution context of the currently running thread
+* restoring the execution context of the newly scheduled thread
+
+Why context switches are not free
+* Thread scheduling requires manipulating shared data structures in the OS and JVM. This activiy takes CPU time.
+* When a new thread is switched in, the data it needs is unlikely to be in the local processor cache, so a context switch causes a flurry of cache misses, threads run a little more slowly when they are first scheduled. (This is why schedulers give threads some minimum time quantum to amortize the cose of the context switch, improving overall throughput.)
+* When a thread blocks (waiting for a contended lock, blocking on IO) it is suspended by the JVM and is allowed to be switched out. If the thread blocks frequently, it will be unable to use their full scheduling quantum.
+
+*vmstat* Unix tool shows the number of context switches and the percentage of time spent in the kernel. High kernel usage indicates heavy scheduling activity, which may be caused by blocking due to IO or lock contention.
+
+h4. Memory synchronization
+
+Sources:
+* Visibility guarantees provided by *synchronized* and *volatile* may entail using special instructions called memory barriers that can flush or invalidate caches, flush hardware write buffers, stall execution pipelines.
+* Indirect performance consequences because they inhibit other compiler optimizations, for examples, many operations can not be reordered with memory barriers.
+* Synchronization creates traffic on the shared memory bus which has a limited bandwidth and is shared across all processors. Threads start competing for synchronization bandwidth, all threads using synchronization will suffer.
+
+It is important to distinguish between *contended* and *uncontended* synchronizations, because *synchronized* mechanism is optimized for the *uncontended* case (*volatile* is always *unconteded*). Focues optimization efforts on areas where lock contention actually occurs.
+* The performance cost of a "fast-path" uncontended synchronization ranges from 50 to 250 clock cycles, which is rarely significant in overall application performance, and the alternative involves compromising safety.
+* JVMs can reduce the cost of incidental syncrhonization by optimizaing away locking that can be proven to never contend. For examples, when a lock object is accessible only to the current thread.
+* JVMs can use escape analysis to identify when a local object reference is never published to the heap. All lock acquisitions can be eliminated.
+* Compilers can perform lock coarsening, the merging of adjacent *synchronized* blocks using the same lock. This may also enable more optimizations inside the larger block of code.
+
+h4. Blocking
+
+When locking is *contended*, the losing thread must block.
+
+Blocking can be implemented via spin-waiting or by suspending the blocked thread through the OS. Spin-waiting is preferable for short waits and suspension is preferable for long waits. Some JVMs choose adaptively but most suspend a thread.
+
+Suspending a thread entails two additional context switches:
+* the blocked thread is switched out before its quantum is expired
+* swithced back when the lock or resource is available
+* blocking due to the lock contention: when a thread releases the lock it must then ask the OS to resume the blocked thread
+
 h2. Reducing lock contention
 
 h2. Comparing map performance
