@@ -151,7 +151,15 @@ Splitting a heavily contended lock into two is likely to result in two heavily c
 
 The disadvantage of *striping locks* is that locking collection for exclusive access is more difficult and costly than with a single lock, all locks must be acquired.
 
+A program that would benefit from lock splittin or striping necessarily exhibits contention for a lock more often than for the data guarded by that lock. If a lock guards two independent vairables X and Y, and thread A watns to access X while B wants to access Y, then the two threads are not contending for any data, even though they are contending for a lock.
+
 h4. Avoiding hot fields
+
+Lock granularity can not be reduced when there are variables that are required for every operation.
+* Common optimizations such as caching frequently computed values can introduce "hot fields" that limit scalability
+* Another area where scalability and raw performance come at odds with each other
+
+For example, implementing the size() method of a collection as a cached value may improve performance but makes it much harder to improve scalability. *ConcurrentHashMap* avoids this problem by storing a counter for each stripe.
 
 h4. Alternatives to exclusive locks
 
