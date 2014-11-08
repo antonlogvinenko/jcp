@@ -129,13 +129,13 @@ Hence 3 ways to reduce lock contention:
 * Reduce the frequency with which locks are requested
 * Replace exclusive locks with coordination mechanisms that permit greater concurrency
 
-h4. Narrowing lock scope
+h4. First. Narrowing lock scope
 
 Hold locks as briefly as possible:
 * move code that does not require the lock out of *synchronized* block
 * especially for expensive operations and potentially blocking operations such as I/O.
 
-h4. Reducing lock granularity
+h4. Second. Reducing lock granularity
 
 Reducing the time the lock is held -- have threads to ask for it less often
 * *lock splittiing*
@@ -153,17 +153,22 @@ The disadvantage of *striping locks* is that locking collection for exclusive ac
 
 A program that would benefit from lock splittin or striping necessarily exhibits contention for a lock more often than for the data guarded by that lock. If a lock guards two independent vairables X and Y, and thread A watns to access X while B wants to access Y, then the two threads are not contending for any data, even though they are contending for a lock.
 
-h4. Avoiding hot fields
-
 Lock granularity can not be reduced when there are variables that are required for every operation.
 * Common optimizations such as caching frequently computed values can introduce "hot fields" that limit scalability
 * Another area where scalability and raw performance come at odds with each other
 
 For example, implementing the size() method of a collection as a cached value may improve performance but makes it much harder to improve scalability. *ConcurrentHashMap* avoids this problem by storing a counter for each stripe.
 
-h4. Alternatives to exclusive locks
+h4. Third. Alternatives to exclusive locks
+
+Forego the use of exclusive locks in favor of a more concurrency-friendly means of managing shared state:
+* concurrent collections
+* read-write locks, can offer greater concurrency for read-mostly data structures
+* immutable objects, can eliminate the need of locking for read-only objects
+* atomic variables, offer means of reducing the cost of updating "hot fields" by providing very fine-grained (and scalable) atomic operations, and are implemented using low-level concurrency primitives (compare-and-swap) provided by most modern prcoesssors
 
 h4. Monitoring CPU utilization
+
 
 h4. Objects pooling
 
