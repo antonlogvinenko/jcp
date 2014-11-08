@@ -137,7 +137,27 @@ Hold locks as briefly as possible:
 
 h4. Reducing lock granularity
 
+Reducing the time the lock is held -- have threads to ask for it less often
+* *lock splittiing*
+* *lock striping*
 
+The disadvantage is that the risk of deadlock increases.
+
+*Splitting locks*:
+* offers greatest possibility for improvement when the lock experiences moderate but not heavy contention, might actually turn them into mostly uncontended locks
+* for locks experiencing little contention this yields little improvement in performance or throughput, but might increase the load threshold at which performance starts to degrade due to contention
+
+Splitting a heavily contended lock into two is likely to result in two heavily contended locks. Lock splitting can be extended to *lock striping* -- partitioning locking on a variable-sized set of independent objects. (Implementation of *ConcurrentHashMap* uses an array of 16 locks, each of which guards 1/16 of the hash buckets).
+
+The disadvantage of *striping locks* is that locking collection for exclusive access is more difficult and costly than with a single lock, all locks must be acquired.
+
+h4. Avoiding hot fields
+
+h4. Alternatives to exclusive locks
+
+h4. Monitoring CPU utilization
+
+h4. Objects pooling
 
 h2. Comparing map performance
 
