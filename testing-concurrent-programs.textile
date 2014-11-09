@@ -1,1 +1,25 @@
+Concurrent programs have a degree of non-determenism that sequential programs do not, increasing the number of potential interactions and failure modes that need to be planned for and analyzed. The same techniques for testing correctness and performance in sequential programs can be applied to concurrent programs:
+* but the space of things that can go wrong is much larger
+* and potential failures may be rare probabilistic occurences rather than determenistic ones
+
+Tests of concurrent classes usually fall into one or all of the classic categories of safety, liveness and performance
+* *tests for safety* verify that class's behavior conforms to its specification, they usually take form of testing invariants
+** this may require locking a concurrent collection for exclusive access (employing some sort of atomic snapshot)
+** or by using "test points" provided by the implementation that let tests asset invariants or execute test code atomically
+** test code can unfortunately introduce timing or synchronization artifacts that that can mask bugs that might otherwise manifest themselves
+* *tests for liveness*
+** tests for progress and non-progress are hard to quantify -- how do you verify that a method is blocking and not merely running slowly?
+** how do you test that an algorithm does not deadlock?
+* *performance tests*
+** *throughput tests* a rate at which a set of concurrent tasks is completed
+** *responsiveness (latency) tests* the delay between a request for and completion of some actiod
+** *scalability tests* the improvement in throughput (or lack thereof) as more resources are made available
+
+h2. Testing for correctness
+
+h2. Testing for performance
+
+h2. Avoding performance testing pitfalls
+
+h2. Complementary testing approaches
 
