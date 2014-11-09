@@ -191,5 +191,27 @@ Object pooling has been shown to be a performance loss for all but the most expe
 
 h2. Reducing context switch overhead
 
+One source of blocking in server applications is generating log messages in the course of processing internals. Approaches:
+* When you have something to log, just write it out right then and there
+* Perform loggin in a dedicated background thread, but has some design implications
+** *Interruptions* -- what happens if thread blocked in a loggin operation is interrupted?
+** *Service guarantees* -- does the logger guarantee that a successfully logged message will be written prior to services shut down?
+** *Saturation policy* -- what happens when the producer log messages faster then the logger thread can handle them?
+** *Service lifecycle* -- how do we shut down the logger and how do we communicate the service state to producers?
 
+Performance and scalability complications of two approaches
+* Service time for a logging operation includes
+** Computations accosicated with the I/O stream classes
+** If I/O blocks, it includes the duration for which the thread is blocked
+** The OS will deschedule the blocked thread until the I/O completes or probably a little longer
+** When the I/O is finished other threads will still use their quanta and other threads will be scheduled ahead of us
+** If multiple threads are logging simultaneously, there may be a contention for the output stream lock, the result is the same as with blocking I/O
+* Inline logging involves I/O and locking which can lead to increased context switching and increased service times.
 
+Increasing service time is undesireable for 2 reasons
+* Service time affects quality of service: someone waits longer for a result
+* More lock contention, and contended lock aqcuisition means more context switches which yields lower overall throughput
+
+If we move blocking to another thread:
+* We shorten the mean service time for request processing
+* Threads need only to queue a message which is less likely to contend then logging I/O and contending for the output stream, and request thread is less likely to blocked and incur context switching in the middle of processing requests
