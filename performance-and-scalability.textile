@@ -189,7 +189,7 @@ Object pooling has been shown to be a performance loss for all but the most expe
 * When thread allocate new objects, very few inter-thread coordination is required, allocators typically used thread-local allocation blocks to eliminate synchronization on heap data structures.  But requesting an object from a pool requires some synchronization, introducing the possibilty that a thread will block, which is hundreds times more expensive than allocating.
 * Pooling has its very limited uses. Even then it could become a scalability issue.
 
-h2. Reducing context switch overhead
+h2. Overview: reducing context switch overhead
 
 One source of blocking in server applications is generating log messages in the course of processing internals. Approaches:
 * When you have something to log, just write it out right then and there
