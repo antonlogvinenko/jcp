@@ -120,7 +120,7 @@ h2. Reducing lock contention
 
 *Lock contention* causes both *serialization* and *context switches*
 * *Serialization* hurts *scalability*
-* *Context switches* hurt hurts *performance*
+* *Context switches* hurt *performance*
 
 The corollary of Little's law, a result from queueing theory, says *"the average number of customers in a stable system is equal to their average arrival rate multiplied by their average time in the system".*
 
@@ -169,10 +169,27 @@ Forego the use of exclusive locks in favor of a more concurrency-friendly means 
 
 h4. Monitoring CPU utilization
 
+When testing for scalability the goal is to keep processors fully utilized. Asymmetric utilization indicates that most of the computation is going on in a small set of threads. Several likely causes:
+* *Insufficient load*. It may be that the application tested is not subjected to enough load. Increase the load.
+* *I/O* bound. Determine whether applicaiton is disk-bound using iostat, or whether it is bandwidth-limited by monitoring traffic levels.
+* *Externally bound*. If your application depends on external services such as a database or web service, the problem may not be in your code.
+* *Lock contention*. Use profiling tools or sampling to figure out how much lock contention your application is experiencing. Heavily contended locks will almost always have at least one thread waiting to acquire it and will frequently appear in thread dumps in the appropriate stack frame as "waiting to lock monitor...".
+* If CPU utilization is high and there are always runnable threads waiting for CPUs, your application would probably benefit from more processors.
 
-h4. Objects pooling
+h4. Avoid object pooling
 
-h2. Comparing map performance
+Object pooling has been shown to be a performance loss for all but the most expensive objects in single-threaded programs
+* It's a loss in terms of CPU time, memory allocation and garbage collection would work faster
+* The challenge of setting pool size incorrectly: too small (pooling has no effect), too large (puts pressure on garbage collector and retains memory that could be useful)
+* The risk that an object will not be properly reset to its newly allocated state, introducing subtle bugs
+* The risk that an object will return the object to the pool but will continue to use it
+* Makes more work for generational GC by encouraging a pattern of old-to-young references.
+
+In concurrent applciations
+* When thread allocate new objects, very few inter-thread coordination is required, allocators typically used thread-local allocation blocks to eliminate synchronization on heap data structures.  But requesting an object from a pool requires some synchronization, introducing the possibilty that a thread will block, which is hundreds times more expensive than allocating.
+* Pooling has its very limited uses. Even then it could become a scalability issue.
 
 h2. Reducing context switch overhead
+
+
 
