@@ -178,14 +178,14 @@ When testing for scalability the goal is to keep processors fully utilized. Asym
 
 h4. Avoid object pooling
 
-Object pooling has been shown to be a performance loss for all but the most expensive objects in single-threaded programs
+Object pooling has been shown to be a performance loss for all but the most expensive objects in *single-threaded programs*
 * It's a loss in terms of CPU time, memory allocation and garbage collection would work faster
 * The challenge of setting pool size incorrectly: too small (pooling has no effect), too large (puts pressure on garbage collector and retains memory that could be useful)
 * The risk that an object will not be properly reset to its newly allocated state, introducing subtle bugs
 * The risk that an object will return the object to the pool but will continue to use it
 * Makes more work for generational GC by encouraging a pattern of old-to-young references.
 
-In concurrent applciations
+*In concurrent applciations*
 * When thread allocate new objects, very few inter-thread coordination is required, allocators typically used thread-local allocation blocks to eliminate synchronization on heap data structures.  But requesting an object from a pool requires some synchronization, introducing the possibilty that a thread will block, which is hundreds times more expensive than allocating.
 * Pooling has its very limited uses. Even then it could become a scalability issue.
 
