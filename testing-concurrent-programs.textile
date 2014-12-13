@@ -28,7 +28,7 @@ Write basic unit test for sequential scenarios, assert invariants and post-condi
 
 h4. Testing blocking operations
 
-Testing that a thread blocks is similar to testing wether an excpetion is thrown: if finishes successfully, then the test failed.
+Testing that a thread blocks is similar to testing wether an exception is thrown: if finishes successfully, then the test failed.
 
 Testing that a method blocks has *two complications*:
 * once a method is blocked, you have to unblock it, which can be solved if the method supports interruptions
@@ -46,6 +46,8 @@ Testing that a method blocks has *two complications*:
 * besides all these reasons, it just may take some time for the target thread to settle into a blocking thread.
 
 h4. Testing safety
+
+
 
 h4. Testing resource management
 
