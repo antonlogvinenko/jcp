@@ -19,6 +19,7 @@ Tests of concurrent classes usually fall into one or all of the classic categori
  ** *scalability tests* the improvement in throughput (or lack thereof) as more resources are made available
 
 h2. Testing for correctness
+
 Unit testing a concurrent class starts with the same analysis as for a sequential class -- identifying invariants and post-conditions that are amendable for mechanical checking.
 
 
