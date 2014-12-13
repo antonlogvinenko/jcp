@@ -28,6 +28,19 @@ Write basic unit test for sequential scenarios, assert invariants and post-condi
 
 h4. Testing blocking operations
 
+Testing that a thread blocks is similar to testing wether an excpetion is thrown: if finishes successfully, then the test failed.
+
+Testing that a method blocks has two complications:
+* once a method is blocked, you have to unblock it, which can be solved if the method supports interruptions
+* waiting until thread is blocked, have to make a decision about how long the few instructions could possibly take
+
+Instructions:
+* create a new test thread which performs a blocking operation and either registers failure right after (calling fail()) or cathes an *InterruptedException* which is a success
+* test thread waits for specified time, interrupts the test thread, joins it and asserts *assertFalse(newThread.isAlive())*
+ ** use timed join -- so that if blocking gets stuck; that is the scenario when it is useful to subclass Thread
+ ** also tests that blocking method throws *InterruptedException* when blocked and interrupted
+
+
 h4. Testing safety
 
 h4. Testing resource management
