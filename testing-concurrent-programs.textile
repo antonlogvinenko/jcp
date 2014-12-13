@@ -22,6 +22,21 @@ h2. Testing for correctness
 
 Unit testing a concurrent class starts with the same analysis as for a sequential class -- identifying invariants and post-conditions that are amendable for mechanical checking.
 
+h4. Basic unit tests
+
+Write basic unit test for sequential scenarios, assert invariants and post-conditions. These tests can disclose when a problem is not related to concurrency issues.
+
+h4. Testing blocking operations
+
+h4. Testing safety
+
+h4. Testing resource management
+
+h4. Using callbacks
+
+h4. Generating more interleavings
+
+
 
 h2. Testing for performance
 
