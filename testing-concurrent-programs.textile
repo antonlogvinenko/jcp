@@ -37,7 +37,7 @@ Testing that a method blocks has *two complications*:
 *Instructions*:
 * create a new test thread which performs a blocking operation and either registers failure right after (calling fail()) or cathes an *InterruptedException* which is a success
 * test thread waits for specified time, interrupts the test thread, joins it and asserts *assertFalse(newThread.isAlive())*
- ** use timed join -- so that if blocking gets stuck; that is the scenario when it is useful to subclass Thread
+ ** use timed join -- for the case when blocking gets stuck; the scenario when it is useful to subclass Thread
  ** also tests that blocking method throws *InterruptedException* when blocked and interrupted
 
 *Caution*: don't use *Thread.getState* to verify that the thread is actually in *WAITING* or *TIMED_WAITING* states:
