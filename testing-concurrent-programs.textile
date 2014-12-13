@@ -40,6 +40,10 @@ Instructions:
  ** use timed join -- so that if blocking gets stuck; that is the scenario when it is useful to subclass Thread
  ** also tests that blocking method throws *InterruptedException* when blocked and interrupted
 
+Caution: don't use *Thread.getState* to verify that the thread is actually in *WAITING* or *TIMED_WAITING* states:
+* the JVM can choose to implement blocking by spin-waiting
+* spurious wakeups from *Object.wait* or *Condition.await* are permitted, a thread in *WAITING* or *TIMED_WAITING* state may transition to *BLOCKED* and then *RUNNABLE*.
+* besides all these reasons, it just may take some time for the target thread to settle into a blocking thread.
 
 h4. Testing safety
 
