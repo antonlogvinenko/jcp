@@ -47,7 +47,17 @@ Testing that a method blocks has *two complications*:
 
 h4. Testing safety
 
+* Identifying easily checked properties that will, with high probability, fails if something goes wrong.
+* Not letting the failure auditing code limit concurrency artificially. It is best if checking the test propety does not require any synchronization.
 
+Testing consumer-producer designs. Check that everything put into a queue comes out of it, and nothing else does.
+* Using shadow list: add elements when added to concurrent collection, remove when removed, check that nothing is left.
+** This approach would distort the scheduling of the test threads because modifying the shadow list would require synchronization
+* Compute checksums of the elements that are enqueued and dequeued using an order-sensitive checksum function, and compare them. Test passes if they match
+** Works best when there is a single producer and consumer
+* Compute checksums of the elements that are enqueued and dequeued using an order-insensitive checksum function
+** We can't check order but don't have to when multuple producers and consumers are used
+** Either multiple checksums must be calculated or a single shared counter used (which may become a bottleneck)
 
 h4. Testing resource management
 
