@@ -59,6 +59,12 @@ Testing consumer-producer designs. Check that everything put into a queue comes 
 ** We can't check order but don't have to when multuple producers and consumers are used
 ** Either multiple checksums must be calculated or a single shared counter used (which may become a bottleneck)
 
+not guessable by the compiler
+barriers to achieve fair multithreading
+termination criterion, timeouts
+why use multiprocessors systems and threads more than CPUs
+
+
 h4. Testing resource management
 
 h4. Using callbacks
