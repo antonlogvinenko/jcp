@@ -74,14 +74,22 @@ Testing consumer-producer designs. Check that everything put into a queue comes 
   *** Should distinguish between failed tests and "not waited long enough"
   
 h4. Testing resource management
+
 Should not only test that
 * code adheres to specification (does what it's suppose to do)
 * but also that it doesn't do what it's not supposed to, such as leak resources: does not hold resources (objects in memory, threads, file handles, sockets, databases connections, other limited resources)
 
 Make snapshot of heap size, run code under resource test, make new snapshot of heap size, compare sizes. 
 
-
 h4. Using callbacks
+
+Callbacks to client-provided code are often made at known points in an object's lyfecycle that are good opportunities to assert invariants.
+
+*ThreadPoolExecutor* makes calls to *Runnables* and *ThreadFactory*
+* addition threads are created when they are supposed to, not when they are not supposed to (using TestingThreadFactory can accomplish that)
+* idle threads get reaped when they are supposed to (custom Thread class could record when threads terminate)
+* the correct number of created tests
+
 
 h4. Generating more interleavings
 
