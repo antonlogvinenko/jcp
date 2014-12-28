@@ -47,24 +47,32 @@ Testing that a method blocks has *two complications*:
 
 h4. Testing safety
 
-* Identifying easily checked properties that will, with high probability, fails if something goes wrong.
+* Identifying easily checked properties that will, with high probability, fail if something goes wrong.
 * Not letting the failure auditing code limit concurrency artificially. It is best if checking the test propety does not require any synchronization.
 
 Testing consumer-producer designs. Check that everything put into a queue comes out of it, and nothing else does.
 * Using shadow list: add elements when added to concurrent collection, remove when removed, check that nothing is left.
-** This approach would distort the scheduling of the test threads because modifying the shadow list would require synchronization
+ ** This approach would distort the scheduling of the test threads because modifying the shadow list would require synchronization
 * Compute checksums of the elements that are enqueued and dequeued using an order-sensitive checksum function, and compare them. Test passes if they match
-** Works best when there is a single producer and consumer
-* Compute checksums of the elements that are enqueued and dequeued using an order-insensitive checksum function
-** We can't check order but don't have to when multuple producers and consumers are used
-** Either multiple checksums must be calculated or a single shared counter used (which may become a bottleneck)
-
-not guessable by the compiler
-barriers to achieve fair multithreading
-termination criterion, timeouts
-why use multiprocessors systems and threads more than CPUs
-
-
+ ** Works best when there is a single producer and consumer
+* For multiple producer-consumer scenario. Compute checksums of the elements that are enqueued and dequeued using an order-insensitive checksum function
+ ** We can't check order but don't have to when multuple producers and consumers are used
+ ** Either multiple checksums must be calculated or a single shared counter used (which may become a bottleneck)
+ ** Ensure that the checksums are not guessable by the compiler
+  *** Test data must be randomly generated
+  *** Provide each thread with custom generator: allows using non-thread safe generators; most are thread-safe and introduce synchronization
+  *** Medium quality fast random generator is enough, no need for high quality randomness, only ensure numbers change from run to run (hashCode and nanoTime, for instance)
+ ** If threads are short-running and you start a number of threads in a loop, threads run earlier have a head start on those run later, you can get less real interleavings
+  *** Use CyclicBarrier, make the worker thread and test driver thread wait the barrier at the beginning and the end of their run.
+  *** Scheduling may still run worker threads sequentially
+ ** Use a deterministic termination criterion so that no additional interthread communication is needed to figure out when the test is finished
+ ** Threads vs cores requirements
+  *** Tests should be run on multiprocessor systems
+  *** There should be more active threads than CPUs so at any given time some threads are running and some are switched out, reducing the predictability of interactions between threads
+ ** It is possible that the test never finishes due to a bug or an exception
+  *** Abort tests that do not terminate within some amount of time
+  *** Should distinguish between failed tests and "not waited long enough"
+  
 h4. Testing resource management
 
 h4. Using callbacks
