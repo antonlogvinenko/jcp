@@ -90,9 +90,11 @@ Callbacks to client-provided code are often made at known points in an object's 
 * idle threads get reaped when they are supposed to (custom Thread class could record when threads terminate)
 * the correct number of created tests
 
-
 h4. Generating more interleavings
 
+Besides running tests on multiprocessors system and using more threads than CPUs you can:
+* use of *Thread.yield* encourages more context switches during operations that access shared state, though the effectiveness of this aproach is platform specific
+* use of *Thread.sleep* is slower but more relieable
 
 
 h2. Testing for performance
