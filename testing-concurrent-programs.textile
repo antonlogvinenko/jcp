@@ -114,8 +114,23 @@ Build performance tests for different algorithms.
 
 h4. Measuring responsiveness
 
+Latency may be a more important characteristic than throughput:
+* predictible service time
+* can answer questions "how many responses are provided within N units of time?"
+
+To measure latency build histograms
+* keep track of per-task completion in addition of average time
+* timer granularity can be a factor in measuring individual task time; to avoid measurement artifacts we can measure run time of small batches
+
+Size of blocking collection
+* small --- heavy context switching, poor throughput
+* large (enough) --- low context switching
+ ** fair mode synchronization --- less throughput but more predictable
+ ** non-fair mode synchronization --- larger throughput, less predictable
 
 h2. Avoding performance testing pitfalls
+
+
 
 h2. Complementary testing approaches
 
