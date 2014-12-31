@@ -96,8 +96,24 @@ Besides running tests on multiprocessors system and using more threads than CPUs
 * use of *Thread.yield* encourages more context switches during operations that access shared state, though the effectiveness of this aproach is platform specific
 * use of *Thread.sleep* is slower but more relieable
 
-
 h2. Testing for performance
+
+Performance tests:
+* seek to measure end-to-end performance metrics for representative use cases
+* to select sizings emperically for various numbers of threads, buffer capacities and so on
+
+h4. Building performance tests
+
+* Use *CyclicBarrier* to start and stop worker threads
+* Provide it with *Runnable* to measure start when starting and finishing a job on barrier
+* Build "normalized throughput"/"number of threads" graph for different parameters
+
+h4. Comparing multiple algorithms
+
+Build performance tests for different algorithms. 
+
+h4. Measuring responsiveness
+
 
 h2. Avoding performance testing pitfalls
 
