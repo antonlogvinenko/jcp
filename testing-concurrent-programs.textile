@@ -125,12 +125,49 @@ To measure latency build histograms
 Size of blocking collection
 * small --- heavy context switching, poor throughput
 * large (enough) --- low context switching
- ** fair mode synchronization --- less throughput but more predictable
+ ** fair mode synchronization --- less throughput, but more predictable latency
  ** non-fair mode synchronization --- larger throughput, less predictable
 
 h2. Avoding performance testing pitfalls
 
+Watch out for a number of coding pitfalls that prevent performance tests from yielding meaningful results
+
+h4. Garbage collection
+
+The timing of GC is unpredictable, there is always the possibility that the GC will run during a mesured test run, which can have a big and spurious impact on effect on the measure time per iteration.
+
+Use 1 of 2 approaches:
+* ensure that garbage collection does not run at all during your test (invoke JVM with -verbose:gc to find out)
+* make sure that the garbage collector runs a number of times during your run; takes longer test and more adequately reflects real-world performance
+
+h4. Dynamic compilation
+
+JVM first interpretes loaded classes and may compile them and then execute native code. This can bias tests results in two ways:
+* compilation consumes CPU resources
+* comparing combination of interpreted and compiled code is not a meaningful performance metric
+* code may be decompiled or recompiled with different optimizations due to invalidated assumptions about prior optimizations: loading a new class or gathering sufficient profiling data
+
+Prevent compilation from biasing your results:
+* run your program for a long time (several minutes) so that compilation and interpreted execution represent a small fraction of the total run time
+* use unmeasured "warm-up" --- execute code long enough to be full compiled. Running HotSpot with -XX:+PrintCompilation prints out a message when dynamic compilation runs, so you can verify that this is prior to, rather than during, measured test runs
+* run tests several times in the same JVM, discard the first results as warm-up, inconsistent results in the remaining groups suggests that the test should be examined further
+* running multiple unrelated CPU intensive activities in a single run, it is a good idea to place explicit pauses between trials to give JVM a chance to catch up with *background tasks*
+ ** pauses for related activites may give unrealistically optimistic results.
+
+h4. Unrealistic sampling of code paths
+
+
+
+h4. Unrealistic degrees of contention
+
+h4. Dead code elimination
 
 
 h2. Complementary testing approaches
+
+h4. Code review
+
+h4. Static analysis tools
+
+h4. Aspect-oriented testing techniques
 
