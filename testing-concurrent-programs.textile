@@ -162,8 +162,25 @@ JVM can use information about execution to provide better code, which may genera
 
 h4. Unrealistic degrees of contention
 
+Two very different sorts of work:
+* accessing shared data
+* thread local computations
+
+Depending on relative proportions of the two types of work, the application will experience different levels of contention and exhibit different performance and scaling behaviours.
+Concurrent performance tests should try to approximate
+* the thread-local computation done by a typical appliction
+* concurrent coordination under study
+
 h4. Dead code elimination
 
+Problem
+* optimizing compilers are adept at spotting and eliminating dead code (that has no effect on the outcome)
+* since benchmarks often don't compute anything they are an easy target for the optimizer
+* both in statically and dynamically compiled languages, but more difficult to analyze in the latter (hard to access compiled code)
+
+HotSpot's *--server* compiler is more adept at optimizing dead code. You should still prefer it (more realistic) to *--client* and write code that is not susceptible to dead-code elimination.
+* write code so that every computed result is used somehow by your program
+* computed results should be unguessable
 
 h2. Complementary testing approaches
 
