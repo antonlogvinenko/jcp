@@ -207,7 +207,7 @@ h4. Static analysis tools
 
 h4. Aspect-oriented testing techniques
 
-
+AOP can be applied to assert invariants or some aspects of compliance with synchronization policies. It's possible to wrap all calls to non-thread-safe Spring methods with the assertion that the call is occuring in the event thread.
 
 h4. Profilers and monitoring tools
 
