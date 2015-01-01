@@ -17,3 +17,5 @@ This repository is intended for storing results of an undergoing work of organiz
  * [Avoding liveness hazards](avoiding-liveness-hazards.textile)
  * [Performance and scalability](performance-and-scalability.textile)
  * [Testing concurrent programs](testing-concurrent-programs.textile)
+* Advanced topics
+ * [Explicit locks](explicit-locks.textile)
