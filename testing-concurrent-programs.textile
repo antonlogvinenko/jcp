@@ -211,3 +211,7 @@ AOP can be applied to assert invariants or some aspects of compliance with synch
 
 h4. Profilers and monitoring tools
 
+* *Profiling tools*. Timeline for each thread with different colors with the various thread states, where CPU resources are utilized.
+* *JMX*
+ ** *ThreadInfo* class includes thread's current state, if thread is blocked, the lock or condition queue on which it is blocked.
+ ** If the "thread contention monitoring" is enabled, *ThreadInfo* also included the number of times that the thread has blocked waiting, and the cumulative time it has spent waiting
