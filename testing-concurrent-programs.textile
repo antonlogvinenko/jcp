@@ -186,7 +186,28 @@ h2. Complementary testing approaches
 
 h4. Code review
 
+* Expert concurrent programmers are better at finding subtle races than are most test programs
+* Platform issues such as JVM implementation details or processor memody models can prevent bugs from showing up on a particular hardware or software configurations
+* Can improve quality of comments describing the implementation details
+
 h4. Static analysis tools
 
+*FindBugs* includes detectors for the following concurrency-related bug-patterns:
+* *Inconsistent synchronization* --- a field is accessed frequently but not always with *this* lock held: synchronization policy may not be consistently followed
+* *Invoking Thread.run* --- almost always a mistake and must be *Thread.start*.
+* *Unreleased lock* --- locks must be released in a finally block
+* *Empty synchronized blocks* --- do have semantics under JVM memory model, but frequently used incorrectly, there are better solutions
+* *Double checked locking* --- broken idiom for reducing sychronization overhead in lazy initialization that involves reading a shared mutable field wihtout proper synchronization
+* *Starting a thread from a constructor* --- risk of subclussing problem, escape of *this* reference
+* *Notification errors* --- a synchronized block that calls *notify* or *notifyAll* but does not modify the state is likely to be an error
+* *Condition wait errors* --- waiting on a condition (*Object.wait* or *Condition.await*) should be called in a loop, with appropriate lock held and after testing some predicate; anything missing probably indicates an error
+* *Misuse of Lock and Condition* --- using a lock as an argument to *syncrhonized* block, calling *Condition.wait* instead of *Condition.await*.
+* *Sleeping or waiting while holding a lock* --- sleeping while holding a lock, calling *Object.wait* or *Condition.await* with 2 locks held is a liveness or performance hazard
+* *Spin loops* --- code that spins checking for a field for an expected value wastes CPU time, if field is not volatile then the thred is not guaranteed to terminate.
+
 h4. Aspect-oriented testing techniques
+
+
+
+h4. Profilers and monitoring tools
 
