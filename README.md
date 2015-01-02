@@ -19,3 +19,4 @@ This repository is intended for storing results of an undergoing work of organiz
  * [Testing concurrent programs](testing-concurrent-programs.textile)
 * Advanced topics
  * [Explicit locks](explicit-locks.textile)
+ * [Building custom synchronizers](building-custom-synchronizers.textile)
