@@ -54,4 +54,8 @@ Reducing lock granularity can enhance scalability. *Lock* implementations:
 
 h2. Performance considerations
 
+For synchonization primitives, contended performance is the key to scalability. If more resources are expended on lock management and scheduling, fewer are available for the applicaiton. Better lock implementation makes fewer system calls, forces fewer context switches, initiates less memory-synchronization traffic on the shared memory bus.
+
+Since Java 6 intrinsic locking uses an improved algorithm for managing intrinsic locking, similar to that used by *ReentrantLock*, which closes the gap between the two considerably.
+
 h2. Fairness
