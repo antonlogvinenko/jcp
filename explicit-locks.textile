@@ -12,20 +12,20 @@ h2. Lock and ReentrantLock
 
 *Lock* interface Methods:
 * unconditional acquisition
- ** void lock()
- ** void lockInterruptibly() throws InterruptedException
+ ** *void lock()*
+ ** *void lockInterruptibly() throws InterruptedException*
 * conditional acquisition
- ** boolean tryLock()
- ** boolean tryLock(long timeout, TineUnit unit) throws InterruptedException
-* unlock()
-* Condition newCondition()
+ ** *boolean tryLock()*
+ ** *boolean tryLock(long timeout, TineUnit unit) throws InterruptedException*
+* *unlock()*
+* *Condition newCondition()*
 
 Why new locking mechanism?
-* Impossible to interrupt thread waiting to acquire intrinsic lock
-* Impossible to avoid waiting for intrinsick lock acquisition forever
-* Intrinsic locks must be released in the same block of code in which they are acquired
+* Impossible *to interrupt* thread waiting to acquire intrinsic lock
+* Impossible *to avoid waiting* for intrinsick lock acquisition forever
+* Intrinsic locks *must be released in the same block* of code in which they are acquired
 
-Using *Lock*s:
+Using *Lock*:
 * *lock* must be released in a finally block --- must be guaranteed that it is released if an exception is thrown
 * also consider what happens if an exception is thrown inside *try* block, objects used must be left in consistent state
 
