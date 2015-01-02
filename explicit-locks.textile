@@ -59,3 +59,26 @@ For synchonization primitives, contended performance is the key to scalability. 
 Since Java 6 intrinsic locking uses an improved algorithm for managing intrinsic locking, similar to that used by *ReentrantLock*, which closes the gap between the two considerably.
 
 h2. Fairness
+
+* Threads acquire a *fair* lock in the order in which they requested it.
+ ** Thread is queued if the lock is held or other threads are waiting for it.
+* Nonfair* lock permits barging, threads requesting lock can jump ahead of the queue of waiting threads if the lock is available when it it requested.
+ ** Thread is queued only if the lock is currently held.
+* *tryLock* always barges, even for fair locks.
+
+When threads *lock frequently* and *for a short period of time* *fair* locking will be less performant
+ ** *Fairness* has a significant cost of suspending and resuming threads. While next in the queue thread waiting thread resumes, another (running) thread could have already acquired and released the lock.
+ ** Statistical fairness guarantee --- promising that a blocked thread will eventually acquire the lock --- is good enough, most algorithms don't require fair locking for their correctness.
+
+Intrinsic locking is unfair.
+ 
+h2. Choosing between synchronized and ReentrantLock
+
+* *Intrinsic locking* advantages
+ ** simpler and less dangerous
+ ** information about lock acquisition of *ReentrantLock* cannot be tied to specific stack frames due to non-block-structured nature of *ReentrantLock*
+ ** current performance optimizations (locks elision for thread-confined lock objects, lock coarsening)
+ ** future performance improvements are likely to favor *synchronized* over *ReentrantLock*
+* *ReentrantLock* advantage is more available flexibility (described earlier)
+
+h2. ReadWriteLock
