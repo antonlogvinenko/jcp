@@ -1,1 +1,57 @@
+h2. Lock and ReentrantLock
 
+*Lock* interface:
+* Lock acquisition:
+ ** unconditional
+ ** polled
+ ** timed
+ ** interruptible
+* Explicit lock and unlock operations
+* Provide the same memory-visibility semantics as intrinsic locks
+* Can differ in locking semantics, scheduling algorithms, ordering guarantees, performance characteristics
+
+*Lock* interface Methods:
+* unconditional acquisition
+ ** void lock()
+ ** void lockInterruptibly() throws InterruptedException
+* conditional acquisition
+ ** boolean tryLock()
+ ** boolean tryLock(long timeout, TineUnit unit) throws InterruptedException
+* unlock()
+* Condition newCondition()
+
+Why new locking mechanism?
+* Impossible to interrupt thread waiting to acquire intrinsic lock
+* Impossible to avoid waiting for intrinsick lock acquisition forever
+* Intrinsic locks must be released in the same block of code in which they are acquired
+
+Using *Lock*s:
+* *lock* must be released in a finally block --- must be guaranteed that it is released if an exception is thrown
+* also consider what happens if an exception is thrown inside *try* block, objects used must be left in consistent state
+
+Example, *ReentrantLock*:
+* same memory semantics as *synchronized* block
+ ** acquiring *ReentrantLock* == entering *synchronized* block
+ ** releasing *ReentrantLock* == exiting *synchronized* block
+* reentrant semantics equivalent to *synchronized* block
+
+h4. Polled and timed acquisition
+
+Polled and timed acquisition (*tryLock*) methods allow to avoid deadlocks without lock ordering.
+* trying to acquire locks one by one, backing off and releasing all of them if failed to acquire one of them
+ ** can retry until succeeded
+ ** can implement time budget support
+
+h4. Interruptible lock acquisition
+
+*lockInterruptibly* (and *tryLock(long, TimeUnit)*) can be used to implement cancellable tasks.
+
+h4. Non-block-structured locking
+
+Reducing lock granularity can enhance scalability. *Lock* implementations:
+* more complex due to manual lock release
+* more flexible
+
+h2. Performance considerations
+
+h2. Fairness
