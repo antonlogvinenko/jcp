@@ -82,3 +82,24 @@ h2. Choosing between synchronized and ReentrantLock
 * *ReentrantLock* advantage is more available flexibility (described earlier)
 
 h2. ReadWriteLock
+
+3 kinds of overlap:
+* writer/writer
+* reader/writer
+* reader/reader
+
+In many cases data structures are "read-mostly". *ReadWriteLock* allows multiple readers to read data at once: many readers, but only a single writer at one moment. Can improve performance for frequently accessed read-moslty data.
+
+The interaction between *read* and *write* locks allows for a number of possible implementations:
+* *Release preference* --- when a writer releases the lock, who should be given priority, readers, writers, or whoever asked first?
+* *Reader barging* --- if the lock is held by readers, some writers are queued, should newly arrived readers be granted immediate access, or should they wait behind writers? (if given --- higher scalability by the cost of starving writers)
+* *Reentrancy* --- are the read and write locks reentrant?
+* *Downgrading* --- can write lock be exchanged for a read lock? other writers would still be unable to modify data
+* *Upgrading*  --- can read lock be exchanged for a write lock? if two readers try to upgrade lock, one of them must is to fail and must release the reader lock
+
+*ReentrantReadWriteLock* characteristics:
+* reentrant locking semantics for both kinds of locks
+* supports both *fair* and *non-fair* modes
+ ** *fair* mode consequence: if readers acquired the lock and writer is queued, no more readers can acquire the lock until the writer lock is obtained and released
+ ** *non-fair* mode, ordering is not specified
+* downgrading is permitted, upgrading is not (possibility of a deadlock)
