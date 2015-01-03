@@ -1,1 +1,35 @@
+State-dependent classes have operations with state-based preconditions (*FutureTask*, *BlockingQueue*)
 
+Implement new snchronizers using
+* intrinsic *condition queue mechanism*
+* explicit *Condition* objects
+* *AbstractQueuedSynchronizer* framework
+
+h4. Managing state dependence
+
+In a single-threaded program if a precondition is not met it will never become true, therefore, they can be coded to fail if preconditions are not met.
+In a concurrent program, such conditions may change because of other thread's actions, and state-dependent methods can wait for preconditions to become true.
+
+The built-in *condition queue mechanism* enables threads
+* to block until an object has entered a state that allows progress
+* to wake blocked threads when they may be able to make further progress
+
+Alternative (worst) approaches
+* throwing exceptions/returning error --- moves burden of retrying on the client, unables ordering
+ * sleeping --- can oversleep
+ * spin wait --- consumes many CPU cycles
+ * *Thread.yield* --- platform-dependent, still possible to oversleep or consume too much CPU
+* Crude blocking by polling and sleeping
+ * complex implementation
+ * have to choose between responsiveness and CPU consumption (timeout)
+ * have to deal with *InterruptedException*
+ 
+h4. Using condition queues
+
+h4. Explicit Condition objects
+
+h4. Anatomy of a synchronizer
+
+h4. AbstractQueueSynchronizer
+
+h4. AQS in java.util.concurrent. synchronizer classes
