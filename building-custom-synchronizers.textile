@@ -23,6 +23,17 @@ Alternative (worst) approaches
  * complex implementation
  * have to choose between responsiveness and CPU consumption (timeout)
  * have to deal with *InterruptedException*
+
+A *condition queue* gives a wait set (a group of threads) a way to wait for a specific condition to become true. Elements of *contidion* queues are threads.
+Each object can act as a queue
+* *wait*, *notify*, *notifyAll* methods
+* should be called holding the lock on the object (preserving state consistency: need to wait on the condition (reading) and to change the condition (writing))
+* *wait* atomically releases the lock, reacquires upon waking
+
+Advantages:
+* CPU efficiency
+* context-switch overhead
+* responsiveness
  
 h4. Using condition queues
 
