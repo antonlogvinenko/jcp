@@ -72,10 +72,10 @@ Make notification whenever the condition predicate becomes true. Hold the lock a
 * *notify* --- selects single thread on the condition queue to wake up
 * *notifyAll* --- wakes up all the threads waiting on that condition queue
 
-*notifyAll* vs *notify*:
-* *notify* may be dangerous if different predicates are waited with a single condition queue --- this approach is prone to error *hijacked signal* akin to *missed signal*. *notifyAll* must be preferred to *notify* in most cases except when both 2 statements are true:
- ** *uniform waiters* --- only one condition predicate is waited with the condition queue, each thread executes the same logic upon returning from wait
- ** *one-in, one-out* --- a notification enables at most one thread to proceed
+*notifyAll* vs *notify* problem:
+* *notify* may be dangerous. *notifyAll* must be preferred to *notify* in most cases except when both 2 statements are true:
+ ** *uniform waiters* --- only one condition predicate is waited with the condition queue, each thread executes the same logic upon returning from wait (or else *signal hijacking*)
+ ** *one-in, one-out* --- a notification enables at most one thread to proceed (*liveness problem*)
 * *notifyAll* causes each thread to wakeup and causes many context switches, O(n^2) in the worst case
 
 *Conditional notification* optimization --- notifying only when a state transition occured.
@@ -101,9 +101,32 @@ For each state-dependent operation and for each operation that modifies the stat
 
 *AbstractQueuedSynchronizer* exploits the concept of exit protocol.
 
-
 h2. Explicit Condition objects
 
+*Condition* is a generalization of intrinsic condition queues.
+
+Disadvantage of intrinsic condition queues
+Only one queue associated with intrinsic lock:
+* typical *notify* vs *notifyAll* problem (see above)
+* the most common pattern for locking involves exposing the condition queue object --- the previous problem with inheritance or using the reference
+
+*Condition* associated with *Lock* (*Lock.newCondition*) offers a richer feature set than intrinsic locking
+* multiple wait sets per lock
+* interruptible and uninterruptible condition waits
+* deadline-based waiting
+* choice of fair and nonfair queueing (inherited from their associated *Lock*)
+
+*Condition* methods
+* await
+ ** void await() throws InterruptedException
+ ** boolean await(long time, TimeUnit unit) throws InterruptedException
+ ** long awaitNanos(long nanosTimeout) throws InterruptedException
+ ** void awaitUninterruptibly();
+ ** boolean awaitUntil(Date deadline) throws InterruptedException
+* signal
+ * void signal()
+ * void signalAll()
+ 
 h2. Anatomy of a synchronizer
 
 h2. AbstractQueueSynchronizer
