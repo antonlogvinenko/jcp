@@ -82,10 +82,24 @@ Make notification whenever the condition predicate becomes true. Hold the lock a
  
 h4. Subclass safety issues
 
-h4. Encapsulating condition queues
+A state-dependent class should follow one of the following guidelines
+* Effectively prohibit inheritance
+ ** making class final
+ ** hiding the condition queues, locks, state variables from subclasses
+  *** subclasses may fail using *notify* due to *hijecked signals*!
+* Fully expose and document its waiting and notification protocols to subclasses
+* Make it possible for subclasses to write code that repairs probable damage
+* Encapsulate the condition queue
+ ** otherwise impossible to force the *uniform waiters* requirement, inherited code may mistakenly wait on this queue which may cause *hijacked signals*
+ ** this is inconsistent with using intrinsic locking to guard the state, will stop supporting any kind of client-side locking
 
 h4. Entry and exit protocols
 
+For each state-dependent operation and for each operation that modifies the state on which another operation has a state dependency, you should define and document an entry and exit protocol
+* the entry protocol is the operation's condition predicate
+* the exit protocol involves examining any state variables that have been changed by the operation to see if they may have caused some other condition predicates to become true, and if so, notifying on the associated condition queue
+
+*AbstractQueuedSynchronizer* exploits the concept of exit protocol.
 
 
 h2. Explicit Condition objects
