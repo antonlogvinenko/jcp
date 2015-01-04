@@ -95,9 +95,9 @@ A state-dependent class should follow one of the following guidelines
 
 h4. Entry and exit protocols
 
-For each state-dependent operation and for each operation that modifies the state on which another operation has a state dependency, you should define and document an entry and exit protocol
-* the entry protocol is the operation's condition predicate
-* the exit protocol involves examining any state variables that have been changed by the operation to see if they may have caused some other condition predicates to become true, and if so, notifying on the associated condition queue
+For each state-dependent operation and for each operation that modifies the state on which another operation has a state dependency, you should define and document an *entry and exit protocol*
+* the *entry protocol* is the operation's condition predicate
+* the *exit protocol* involves examining any state variables that have been changed by the operation to see if they may have caused some other condition predicates to become true, and if so, notifying on the associated condition queue
 
 *AbstractQueuedSynchronizer* exploits the concept of exit protocol.
 
