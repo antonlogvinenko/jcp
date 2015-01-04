@@ -133,6 +133,12 @@ Only one queue associated with intrinsic lock:
  
 h2. Anatomy of a synchronizer
 
+*ReentrantLock*, *Semaphore*, *CountDownLatch*, *ReentrantReadWriteLock*, *SynchronousQueue*, *FutureTask* are implemented with *AbstractQueuedSynchronizer*.
+
+Advantages of *AbstractQueuedSynchronizer*:
+* have only one point where they might block, reducing context-switch overhead and improving throughput --- designed for scalability
+* reduces the implementation effort
+
 h2. AbstractQueueSynchronizer
 
 h2. AQS in java.util.concurrent. synchronizer classes
