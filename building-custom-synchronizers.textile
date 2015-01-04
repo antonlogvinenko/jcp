@@ -5,7 +5,7 @@ Implement new snchronizers using
 * explicit *Condition* objects
 * *AbstractQueuedSynchronizer* framework
 
-h4. Managing state dependence
+h2. Managing state dependence
 
 In a single-threaded program if a precondition is not met it will never become true, therefore, they can be coded to fail if preconditions are not met.
 In a concurrent program, such conditions may change because of other thread's actions, and state-dependent methods can wait for preconditions to become true.
@@ -35,12 +35,31 @@ Advantages:
 * context-switch overhead
 * responsiveness
  
-h4. Using condition queues
+h2. Using condition queues
 
-h4. Explicit Condition objects
+h4. The condition predicate
 
-h4. Anatomy of a synchronizer
+The condition predicate is the precondition that makes an operation state dependent.
 
-h4. AbstractQueueSynchronizer
+Condition predicate
+* involves state variables guarded by a lock
+* before testing the condition predicate we must acquire that lock
+* that lock object must be the condition queue object
 
-h4. AQS in java.util.concurrent. synchronizer classes
+If the precondition is not true *wait* releases the lock, puts thread in a waiting queue, reactuires the lock after some of the following events occured:
+* thread is interrupted
+* timeout has passed
+* thread is notified
+* spurious wakeup
+
+h4. Waking up too soon
+
+
+
+h2. Explicit Condition objects
+
+h2. Anatomy of a synchronizer
+
+h2. AbstractQueueSynchronizer
+
+h2. AQS in java.util.concurrent. synchronizer classes
