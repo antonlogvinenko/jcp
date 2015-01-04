@@ -73,7 +73,7 @@ Make notification whenever the condition predicate becomes true. Hold the lock a
 * *notifyAll* --- wakes up all the threads waiting on that condition queue
 
 *notifyAll* vs *notify*:
-*notify* may be dangerous if different predicates are waited with a single condition queue --- this approach is prone to error *hijacked signal* akin to *missed signal*. *notifyAll* must be preferred to *notify* in most cases except when both 2 statements are true:
+* *notify* may be dangerous if different predicates are waited with a single condition queue --- this approach is prone to error *hijacked signal* akin to *missed signal*. *notifyAll* must be preferred to *notify* in most cases except when both 2 statements are true:
  ** *uniform waiters* --- only one condition predicate is waited with the condition queue, each thread executes the same logic upon returning from wait
  ** *one-in, one-out* --- a notification enables at most one thread to proceed
 * *notifyAll* causes each thread to wakeup and causes many context switches, O(n^2) in the worst case
