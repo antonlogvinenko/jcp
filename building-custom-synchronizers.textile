@@ -54,13 +54,39 @@ If the precondition is not true *wait* releases the lock, puts thread in a waiti
 
 h4. Waking up too soon
 
-When a thread is waked up and reacquired the lock, the condition may not be true:
+When a thread is waked up and has reacquired the lock, the condition may not be true:
 * other waiting or unrelated threads may have already modified the state
 * other threads may wait for another predicate and that notification may not be related to your precondition
 
 The rules
 * always check the precondition again
 * check the precondition in a loop
+
+h4. Missed signals
+
+Failing to check a precondition before waiting may lead to a "lost signal". If that happens, your thread may potentially wait indefinitely.
+
+h4. Notifications
+
+Make notification whenever the condition predicate becomes true. Hold the lock associated with the object and invoke notify method
+* *notify* --- selects single thread on the condition queue to wake up
+* *notifyAll* --- wakes up all the threads waiting on that condition queue
+
+*notifyAll* vs *notify*:
+*notify* may be dangerous if different predicates are waited with a single condition queue --- this approach is prone to error *hijacked signal* akin to *missed signal*. *notifyAll* must be preferred to *notify* in most cases except when both 2 statements are true:
+ ** *uniform waiters* --- only one condition predicate is waited with the condition queue, each thread executes the same logic upon returning from wait
+ ** *one-in, one-out* --- a notification enables at most one thread to proceed
+* *notifyAll* causes each thread to wakeup and causes many context switches, O(n^2) in the worst case
+
+*Conditional notification* optimization --- notifying only when a state transition occured.
+ 
+h4. Subclass safety issues
+
+h4. Encapsulating condition queues
+
+h4. Entry and exit protocols
+
+
 
 h2. Explicit Condition objects
 
