@@ -108,7 +108,11 @@ h2. Explicit Condition objects
 Disadvantage of intrinsic condition queues
 Only one queue associated with intrinsic lock:
 * typical *notify* vs *notifyAll* problem (see above)
-* the most common pattern for locking involves exposing the condition queue object --- the previous problem with inheritance or using the reference
+ ** *notifyAll* --- performance considerations
+ ** *notify* --- policy
+  *** uniformed waiters (or else hijacking)
+  *** one-in, one-out (or else liveness problems)
+* the most common pattern for locking involves exposing the condition queue object (owning the reference or inheriting) --- the previous problem with inheritance or using the reference
 
 *Condition* associated with *Lock* (*Lock.newCondition*) offers a richer feature set than intrinsic locking
 * multiple wait sets per lock
