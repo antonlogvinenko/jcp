@@ -54,7 +54,13 @@ If the precondition is not true *wait* releases the lock, puts thread in a waiti
 
 h4. Waking up too soon
 
+When a thread is waked up and reacquired the lock, the condition may not be true:
+* other waiting or unrelated threads may have already modified the state
+* other threads may wait for another predicate and that notification may not be related to your precondition
 
+The rules
+* always check the precondition again
+* check the precondition in a loop
 
 h2. Explicit Condition objects
 
