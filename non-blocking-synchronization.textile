@@ -1,0 +1,32 @@
+Non-blocking algorithms use low-level atomic machine instructions such as compare-and-swap instead of locks to ensure data integrity under concurrent access.
+
+They are more complicated to implement than lock-based alternatives, but have many advantages:
+* coordinate at a finer level of granularity and can greatly reduce scheduling overhead because they don't block multiple threads
+* immune to deadlock and other liveness problems --- impervious to individual thread failures
+
+h2. Disadvantages of locking
+
+* Modern JVMs can optimize uncontended lock acquisition and release fairly effectively, but if multiple threads request the lock, the JVM may
+ ** use profiling data to decide to use spin waiting
+ ** enlist the help of the operating system: suspend some thread and resume it later, after that the thread may have to wait until other threads finish their scheduling quanta
+  *** a lot of overhead: context switches, scheduling delays
+  *** also, for fine-grained operations the ratio of overhead compared to useful work may be quite high
+* Lighter-weight synchronization, volatile, they cannot be used to construct atomic compound actions
+ ** can't be used when one variable depends on another
+ ** can't be used when new value depends on the old one
+* When a thread holding a lock is delayed (page fault, scheduling delay, etc.), then no thread that needs that lock can make progress
+ ** this makes higher-priority threads effecrively become lower-priority threads --- priority inversion
+ ** if the thread is locked permanently, any threads waiting for that lock can never make progress
+
+h2. Hardware support of concurrency
+
+
+
+h2. Atomic variable classes
+
+
+
+h2. Non-blocking algorithms
+
+
+
