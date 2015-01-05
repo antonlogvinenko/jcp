@@ -20,7 +20,41 @@ h2. Disadvantages of locking
 
 h2. Hardware support of concurrency
 
+* Exclusive locking is a pessimistic technique --- it assumes the worst and doesn't proceed until you can guarantee (by acquiring the locks) that other threads will not interfere
+* Optimistic approach is more efficient for fine-grained operations, you proceed with an update hopreful that you can proceed withoud interference. In case of interference the operation fails and may be retried
 
+Most processors have *read-modify-write* instruction: *compare-and-swap*, *load-linked/store-conditional*.
+
+Most CPUs implement *CAS*:
+* 3 operands, memory location V, the expected value A, the new value B
+* atomically updates V but only if its current value is A, otherwise does nothing
+* returns current value in V
+
+When using *CAS*
+* read A from V
+* derive the new value B from A
+* use CAS to atomically update B
+* one threads wins, successfully updates the value
+* other threads fail, may decide to retry or do nothing
+
+Performance comparison: *CAS* significantly outperforms locking:
+* the fast path for uncontended lock acquisition typically requires at least one CAS plus other lock-related housekeeping => more work in the case of locking
+ * lock: at least one *CAS*, traversing a relatively complicated code path in the JVM, may entail OS-level locking, thread suspension, context switches
+ * *CAS*: no JVM code, system calls or scheduling activity
+* *CAS* succeeds most of the time, the CPU will correctly predict the branch implicit in the retry loop.
+
+Costs:
+* single core CPU: a few instructions
+* multiple CPU, uncontended: ~150 cycles
+* price of uncontended lock acquisition and release is about 2 times the price of *CAS*
+
+Disadvantage of *CAS*:
+* makes client code to deal with contention (retrying, backing off, giving up)
+* the difficulty of constructing the surrounding algorithms correctly
+
+Low-level support exists to support *CAS* operations, JVM compiles into the most efficient code for the hardware:
+* if platform supports *CAS*, the JVM inlines into the appropriate machine instructions
+* if *CAS*-like instructions are not available, the JVM uses a spin lock
 
 h2. Atomic variable classes
 
