@@ -181,6 +181,3 @@ Acquisition has two parts
 *tryRelease* and *tryReleaseShared*:
 * true --- the release may have unblocked some threads attempting to acquire the synchronizer
 * false otherwise
-
-
-h2. AQS in java.util.concurrent. synchronizer classes
