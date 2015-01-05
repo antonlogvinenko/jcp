@@ -158,7 +158,29 @@ The basic operations that an *AQS*-based synchronizer performs are some variants
 * *Semaphore* --- the number of permits remaining
 * *FutureTask* --- the state of the task (not yet started, running, completed, cancelled)
 
+Acquisition has two parts
+* the synchronizer decides whether the current state permits acquisition
+ ** if so, the thread is allowed to proceed
+ ** if not, the acquire fails or blocks
+* possibly updating the synchronizer state --- one thread acquiring the sycnrhonizer affects whether other threads can acquire it
 
+*AQS* usage
+* Use your *Sync* class to implement synchronizer
+ ** *acquire*, *release* for exclusive access
+ ** *acquireShared*, *releaseShared* for shared access
+* Implement your *Sync* subclassing *AQS*
+ ** *acquire*, *release* implement exclusive access using methods implemented by a subclass: *tryAcquire*, *tryRelease*, *isHeldExclusively*
+ ** *acquireShared*, *releaseShared* implement shared access using methods implemented by a subclass: *tryAcquireShared*, *tryReleaseShared*
+ ** use *getState*, *setState* and *compareAndSetState* to examine and update the state according to its acquire and release semantics
+ 
+*tryAcquireShared* returns:
+* negative value --- acquisition failure
+* zero --- exclusive acquisition
+* positive value --- non-exclusive acquisition
+
+*tryRelease* and *tryReleaseShared*:
+* true --- the release may have unblocked some threads attempting to acquire the synchronizer
+* false otherwise
 
 
 h2. AQS in java.util.concurrent. synchronizer classes
