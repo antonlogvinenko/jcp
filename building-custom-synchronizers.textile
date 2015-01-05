@@ -139,6 +139,26 @@ Advantages of *AbstractQueuedSynchronizer*:
 * have only one point where they might block, reducing context-switch overhead and improving throughput --- designed for scalability
 * reduces the implementation effort
 
-h2. AbstractQueueSynchronizer
+h2. AbstractQueuedSynchronizer
+
+The basic operations that an *AQS*-based synchronizer performs are some variants of acquire and release
+* acquisition is the state-dependent operation and can always lock
+ ** *Lock*, *Semaphore*: *acquire* means *acquire the lock or a permit*
+ ** *CountDownLatch*: waiting until the latch has reached its terminal state
+ ** *FutureTask*: wait until the task has completed
+* release is not a blocking operation, but it may allow threads blocked in acquire to proceed
+
+*AQS* takes on the task of managing some of the state for synchronizer class: it manages a single integer of state information that can be manipulated through the protected
+* *getState*
+* *setState*
+* *compareAndSetState*
+
+*AQS* is used to represent states:
+* *ReentrantLock* --- the count of times the owning thread has acquired the lock
+* *Semaphore* --- the number of permits remaining
+* *FutureTask* --- the state of the task (not yet started, running, completed, cancelled)
+
+
+
 
 h2. AQS in java.util.concurrent. synchronizer classes
