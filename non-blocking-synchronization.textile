@@ -58,7 +58,22 @@ Low-level support exists to support *CAS* operations, JVM compiles into the most
 
 h2. Atomic variable classes
 
+Difference
+THe atomic variable classes provide a generalization of volatile variables to support atomic conditional read-modify-write operations.
+* AtomicInteger* has *compareAndSet* method, atomic add, increment and decrement methods
+* compareAndSet if successful has a semantics of both reading and writing a volatile variable
 
+Four groups of atomic variables classes
+* scalars
+ * *AtomicInteger*, *AtomicLong*, *AtomicBoolean*, *AtomicReference*
+ * use *floatToIntBits* or *doubleToLongBits* for float and double types
+ * do not redefine *equals* or *hash* methods, not good candidates for keys in hash-based collections
+* field updaters ---
+ ** *AtomicLongFieldUpdater*, *AtomicLongFieldUpdater*, *AtomicReferenceFieldUpdater*
+* arrays --- elements can be update atomically
+ ** *AtomicDoubleArray*, *AtomicIntegerArray*, *AtomicLongArray*
+* compound variables:
+ ** *AtomicStampedReference*, *AtomicMarkableReference*
 
 h2. Non-blocking algorithms
 
