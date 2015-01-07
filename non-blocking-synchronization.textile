@@ -65,9 +65,9 @@ THe atomic variable classes provide a generalization of volatile variables to su
 
 Four groups of atomic variables classes
 * scalars
- * *AtomicInteger*, *AtomicLong*, *AtomicBoolean*, *AtomicReference*
- * use *floatToIntBits* or *doubleToLongBits* for float and double types
- * do not redefine *equals* or *hash* methods, not good candidates for keys in hash-based collections
+ ** *AtomicInteger*, *AtomicLong*, *AtomicBoolean*, *AtomicReference*
+ ** use *floatToIntBits* or *doubleToLongBits* for float and double types
+ ** do not redefine *equals* or *hash* methods, not good candidates for keys in hash-based collections
 * field updaters ---
  ** *AtomicLongFieldUpdater*, *AtomicLongFieldUpdater*, *AtomicReferenceFieldUpdater*
 * arrays --- elements can be update atomically
