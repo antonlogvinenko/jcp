@@ -75,6 +75,14 @@ Four groups of atomic variables classes
 * compound variables
  ** *AtomicStampedReference*, *AtomicMarkableReference*
 
+Performance
+* At high contention levels locking tends to slightly outperform atomic variables
+ ** Lock reacts to contention by suspending threads, reducing CPU usage and synchronization traffic on the shared memory bus
+* At more realistic contention levels atomic vairables outperform locks
+ ** contention management is pushed back to the calling class, CAS-based algorithms react to contention by retrying immediately
+* CAS-based algorithms always outperform lock-based algorithms on single-CPU systems
+ ** CPU always succeeds on a single-CPU system except in the unlikely case that a thread is preempted in the middle of read-modify-write operation
+
 h2. Non-blocking algorithms
 
 
