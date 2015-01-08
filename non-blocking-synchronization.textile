@@ -85,5 +85,27 @@ Performance
 
 h2. Non-blocking algorithms
 
+An algorithm is *non-blocking* if failure or suspension of any thread cannot cause failure or suspension of another thread.
+An algorithm us *lock-free* if at each step some thread can make progress.
 
+Algorithms tha use CAS excusively for coordination between threads can, if constructed properly, be both *lock-free* and *non-blocking*
+* Making progress: unconteded CAS always succeeds; if multiple threads content, one always wins
+* Immune to deadlock or priority inversion, though can exhibit starvation or livelock
 
+*CAS*-based algorithms derive their thread-safety from the fact that, like locking, *compareAndSet* provides both atomicity and visibility guarantees.
+* changing the state with *compareAndSet* which has the memory semantics of a volatile write
+* when a thread examines the stack, it does so by calling *get* which has the memory effects of a volatile read
+
+Key to creating non-blocking algorithms is figuring out how to limit the scope of atomic changes to a single variable while maintaing data consistency.
+* In linked collections you can sometimes get away with expressing state transformations as changes to individual links and using an *AtomicReference* to represent each link that must be updated atomically
+ ** Stack: construct a new node that refers to the top; V=reference to the top node; try to atomically update the link to the top, if it's still V
+* If two variales need to be updated
+ ** LinkedList: the tail and the next reference in the tail node; update the tail node's link:
+  *** successful --- complete the operation, may fail because another thread helped to complete
+  *** failed --- help to complete the operation (may fail --- the thread finished itself or another thread helped) and retry (Michal-Scott algorithm)
+ ** AtomicUpdaters
+  *** Single updater instance for all nodes
+  *** Inner state of node must be protected --- *final* fields for immutable references, *volatile* fields for mutating references
+  *** Performance issue --- for frequently allocated, short-lived objects eliminating the creation of *AtomicReference* for each node may be significant enough to reduce the cost of insertion operations
+
+h2. The ABA problem
