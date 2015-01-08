@@ -109,3 +109,9 @@ Key to creating non-blocking algorithms is figuring out how to limit the scope o
   *** Performance issue --- for frequently allocated, short-lived objects eliminating the creation of *AtomicReference* for each node may be significant enough to reduce the cost of insertion operations
 
 h2. The ABA problem
+
+The *ABA problem*: is it sufficient to check that the value is A, or that it stayed A, not became B and then A again?
+
+Solution: instead of updating the value of a reference, update a pair of values, a reference and a version number
+* use *AtomicStampedReference* --- reference with a version
+* use *AtomicMarkedReference* --- reference with a flag (e.g., "removed")
