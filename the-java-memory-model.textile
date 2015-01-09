@@ -37,8 +37,8 @@ Piggybacking on synchronization, other rules of *happens-before*
 * perfectly reasonable when a class commits to a happens-before ordering between methods as part of specification
 
 Other happens-before orderings:
-* *placing an item in a thread-safe collection* happens-before another thread retreives that item from the collection
-* *counting down a CountDownLatch* happens-before a thread returns from *await* on that latch
+* *placing an item in a thread-safe collection* happens-before *another thread retreives that item from the collection*
+* *counting down a CountDownLatch* happens-before *a thread returns from await on that latch*
 * *releasing a permit to a Semaphore* happens-before *acquiring a permit from that same Semaphore*
 * *actions taken by the task represented by a Future* happen-before *another thread successfully returns from Future.get*
 * *submitting a Runnable or Callable to an Executor* happens-before *the task begins execution*
