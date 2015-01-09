@@ -1,1 +1,33 @@
 
+h2. Java Memory Model
+
+Order and visibility of operations are influenced by many factors
+* compilers may generate instructions in a different order than the "obvious" one suggested by the source code
+* generated code may store variables in registers
+* CPU caches may vary the order in which writes to variables are committed to main memory
+* processors may execute instructions in parallel or out of order
+* JVM can permit actions to appear to execute in different order from the perspective of different threads
+
+These factors can
+* prevent a thread from seeing the most up-to-date value for a variable (visibility)
+* cause memory actions in other threads to appear to happen out of order (atomicity)
+
+The JMM
+* specifies the minimal guarantees the JVM must make about when writes to variables become visible to other threads called *sequential consistency* using *happens-before* semantics
+ ** *sequential consistency* --- there is a single order in which operations will happen and each read of a variable will see the last write in the execution order to that variable
+ ** *happens-before* --- A happens before B means B will see the results of action A
+* abstracts specific CPUs memory models
+
+*Correctly synchronized programs* exhibit *sequential consistency* using *happens-before* relations.
+
+The rules of *happens-before*:
+* *Program order rule* --- each action in a thread happens-before every action in that thread that comes later in the program order
+* *Monitor lock rule* --- an unlock on a monitor lock happens-before every subsequent lock on the same monitor lock (same for *explicit Locks*)
+* *Volatile variables rule* --- a write to a volatile field happens-before every subsequent read of that same field (same for *atomic* variables)
+* *Thread start rule* --- a call to *Thread.start* on a thread happens-before every action in the started thread
+* *Thread termination rule* --- any action in a thread happens-before any other thread detects that thread has terminated, either by successfully return from *Thread.join* or by *Thread.isAlive* returning false
+* *Interruption rule* --- a thread calling *interrupt* on another thread happens-before the interrupted thread detects the interrupt (either by having *InterruptedExceotion* thrown, or invoking *isInterrupted* or *interrupted*)
+* *Finalizer rule* --- the end of a constructor for an object happens-before the start of the finalizer for that object
+* *Transitivity* --- if *A* happens-before *B*, *B* happens-before *C*, then *A* happens-before *C*
+
+Piggybacking on synchronization, other rules of *happens-before*
