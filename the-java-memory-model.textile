@@ -31,3 +31,16 @@ The rules of *happens-before*:
 * *Transitivity* --- if *A* happens-before *B*, *B* happens-before *C*, then *A* happens-before *C*
 
 Piggybacking on synchronization, other rules of *happens-before*
+*Piggybacking* --- using an existing happens-before ordering that was created for some other reason to order accesses to a variable not otherwise guarded by a lock.
+* technique very sensitive to the order in which statements occur and therefore is very fragile
+* should be reserved for squeezing the last drop of performance out of the most performance critical classes (like *ReentrantLock*)
+* perfectly reasonable when a class commits to a happens-before ordering between methods as part of specification
+
+Other happens-before orderings:
+* *placing an item in a thread-safe collection* happens-before another thread retreives that item from the collection
+* *counting down a CountDownLatch* happens-before a thread returns from *await* on that latch
+* *releasing a permit to a Semaphore* happens-before *acquiring a permit from that same Semaphore*
+* *actions taken by the task represented by a Future* happen-before *another thread successfully returns from Future.get*
+* *submitting a Runnable or Callable to an Executor* happens-before *the task begins execution*
+* *a thread arriving at a CyclicBarrier or Exchanger* happens-before *the other threads are released from that same barrier or exchange point*
+* if CyclicBarrier uses a barrier action, *arriving at the barrier* happens-before *the barrier action* which in turn happens-before *threads are released from the barrier*
