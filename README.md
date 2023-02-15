@@ -21,4 +21,4 @@ This repository is intended for storing results of an undergoing work of organiz
  * [Explicit locks](explicit-locks.textile)
  * [Building custom synchronizers](building-custom-synchronizers.textile)
  * [Atomic variables and non-blocking synchronization](non-blocking-synchronization.textile)
- * [The Java memory model] (the-java-memory-model.textile)
+ * [The Java memory model](the-java-memory-model.textile)
